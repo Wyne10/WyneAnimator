@@ -13,17 +13,14 @@ namespace WyneAnimator
 
         private SerializedObject _animatorSerializedObject;
 
-        // Array of arrays of all the animations
-        private SerializedProperty[] _WAnimationsProperties;
-
-        // Selected array of animations
-        private SerializedProperty _selectedWAnimationArray;
+        private SerializedProperty[] _WAnimations;
+        private SerializedProperty _selectedWAnimations;
 
         private Vector2 _scrollPos = Vector2.zero;
 
-        private Texture2D _animationPropertyTexture;
-        private Color _animationPropertyColor = new Color(56f / 255f, 56f / 255f, 56f / 255f);
-        private GUIStyle _animationPropertyStyle = new GUIStyle();
+        private Texture2D _WAnimationTexture;
+        private Color _WAnimationColor = new Color(56f / 255f, 56f / 255f, 56f / 255f);
+        private GUIStyle _WAnimationStyle = new GUIStyle();
 
         private GUIStyle _headerTextStyle = new GUIStyle();
 
@@ -32,10 +29,8 @@ namespace WyneAnimator
             WAnimatorEditorWindow window = GetWindow<WAnimatorEditorWindow>("WAnimations Editor");
             window._animator = animator;
             window._animatorSerializedObject = new SerializedObject(animator);
-            window._WAnimationsProperties = new SerializedProperty[]
+            window._WAnimations = new SerializedProperty[]
             {
-                window._animatorSerializedObject.FindProperty("OnEnableAnimations"),
-                window._animatorSerializedObject.FindProperty("OnAwakeAnimations"),
                 window._animatorSerializedObject.FindProperty("OnStartAnimations"),
             };
 
@@ -54,7 +49,7 @@ namespace WyneAnimator
 
             EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
 
-            if (_selectedWAnimationArray != null)
+            if (_selectedWAnimations != null)
             {
                 DrawAnimationInspector();
             }
@@ -71,22 +66,25 @@ namespace WyneAnimator
         {
             _animatorSerializedObject.ApplyModifiedProperties();
 
-            FieldInfo animationArrayInfo = typeof(WAnimator).GetField(_selectedWAnimationArray.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            WAnimation[] animationArray = (WAnimation[])animationArrayInfo.GetValue(_animator);
-
-            foreach (WAnimation animation in animationArray)
+            if (_selectedWAnimations != null)
             {
-                animation.Loaded = false;
+                FieldInfo animationArrayInfo = typeof(WAnimator).GetField(_selectedWAnimations.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                WAnimation[] animationArray = (WAnimation[])animationArrayInfo.GetValue(_animator);
+
+                foreach (WAnimation animation in animationArray)
+                {
+                    animation.Loaded = false;
+                }
             }
         }
 
         private void DrawAnimationSelection()
         {
-            foreach (SerializedProperty WAnimationArray in _WAnimationsProperties)
+            foreach (SerializedProperty WAnimationArray in _WAnimations)
             {
                 if (GUILayout.Button(WAnimationArray.displayName))
                 {
-                    _selectedWAnimationArray = _animatorSerializedObject.FindProperty(WAnimationArray.name);
+                    _selectedWAnimations = _animatorSerializedObject.FindProperty(WAnimationArray.name);
                 }
             }
         }
@@ -94,7 +92,7 @@ namespace WyneAnimator
         private void DrawAnimationInspector()
         {
             // Selected animations header
-            GUILayout.Label(_selectedWAnimationArray.displayName, _headerTextStyle);
+            GUILayout.Label(_selectedWAnimations.displayName, _headerTextStyle);
 
             EditorGUILayout.Separator();
 
@@ -103,14 +101,14 @@ namespace WyneAnimator
             _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
 
             // Selected animations array
-            FieldInfo animationArrayInfo = typeof(WAnimator).GetField(_selectedWAnimationArray.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo animationArrayInfo = typeof(WAnimator).GetField(_selectedWAnimations.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             WAnimation[] animationArray = (WAnimation[])animationArrayInfo.GetValue(_animator);
 
-            if (_selectedWAnimationArray.arraySize > 0)
+            if (_selectedWAnimations.arraySize > 0)
             {
                 int i = 0;
                 // Foreach WAnimation in selected animations array
-                foreach (SerializedProperty WAnimationProperty in _selectedWAnimationArray)
+                foreach (SerializedProperty WAnimationProperty in _selectedWAnimations)
                 {
                     // Create nice border
                     EditorGUILayout.BeginVertical("box");
@@ -129,7 +127,7 @@ namespace WyneAnimator
                         WAnimation[] newAnimationArray = newAnimationList.ToArray();
                         animationArrayInfo.SetValue(_animator, newAnimationArray);
                         _animatorSerializedObject.Update();
-                        _selectedWAnimationArray = _animatorSerializedObject.FindProperty(_selectedWAnimationArray.name);
+                        _selectedWAnimations = _animatorSerializedObject.FindProperty(_selectedWAnimations.name);
                         EditorGUILayout.EndHorizontal();
                         break;
                     }
@@ -150,82 +148,34 @@ namespace WyneAnimator
 
                         if (animationArray[i].AnimationComponent != null)
                         {
-                            // Foreach field in selected component
-                            foreach (FieldInfo field in animationArray[i].ComponentFields)
+                            foreach (ValueInfo value in animationArray[i].ValuesTweens.Keys)
                             {
-                                // If field can be handled by animator
-                                if (!field.CheckReflectedValue()) continue;
+                                animationArray[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(animationArray[i].ValuesTweens[value].IsExpanded, value.Name, true);
 
-                                // Create foldout for animation properties of field
-                                animationArray[i].ComponentFieldsTweens[field].IsExpanded = EditorGUILayout.Foldout(animationArray[i].ComponentFieldsTweens[field].IsExpanded, field.Name, true);
-
-                                // Animation properties of field
-                                if (animationArray[i].ComponentFieldsTweens[field].IsExpanded)
+                                if (animationArray[i].ValuesTweens[value].IsExpanded)
                                 {
-                                    GUILayout.BeginVertical(_animationPropertyStyle);
+                                    GUILayout.BeginVertical(_WAnimationStyle);
 
                                     GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentFieldsTweens[field].SetNewAnimationValue(VisualizeObject(animationArray[i].ComponentFieldsTweens[field].NewValue, "To"));
+                                    animationArray[i].ValuesTweens[value].EndValue = VisualizeObject(animationArray[i].ValuesTweens[value].EndValue, "To");
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentFieldsTweens[field].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", animationArray[i].ComponentFieldsTweens[field].IgnoreTimeScale);
+                                    animationArray[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", animationArray[i].ValuesTweens[value].IgnoreTimeScale);
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentFieldsTweens[field].Duration = EditorGUILayout.FloatField("Duration", animationArray[i].ComponentFieldsTweens[field].Duration);
-                                    animationArray[i].ComponentFieldsTweens[field].Delay = EditorGUILayout.FloatField("Delay", animationArray[i].ComponentFieldsTweens[field].Delay);
+                                    animationArray[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", animationArray[i].ValuesTweens[value].Duration);
+                                    animationArray[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", animationArray[i].ValuesTweens[value].Delay);
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentFieldsTweens[field].Loops = EditorGUILayout.IntField("Loops", animationArray[i].ComponentFieldsTweens[field].Loops);
-                                    animationArray[i].ComponentFieldsTweens[field].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", animationArray[i].ComponentFieldsTweens[field].LoopType);
+                                    animationArray[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", animationArray[i].ValuesTweens[value].Loops);
+                                    animationArray[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", animationArray[i].ValuesTweens[value].LoopType);
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentFieldsTweens[field].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", animationArray[i].ComponentFieldsTweens[field].Ease);
-                                    GUILayout.EndHorizontal();
-
-                                    GUILayout.EndVertical();
-                                }
-
-                                EditorGUILayout.Space(10);
-                            }
-
-                            // Foreach property in selected component
-                            foreach (PropertyInfo property in animationArray[i].ComponentProperties)
-                            {
-                                // If property can be handled by animator
-                                if (!property.CheckReflectedValue()) continue;
-
-                                // Create foldout for animation properties of field
-                                animationArray[i].ComponentPropertiesTweens[property].IsExpanded = EditorGUILayout.Foldout(animationArray[i].ComponentPropertiesTweens[property].IsExpanded, property.Name, true);
-
-                                // Animation properties of field
-                                if (animationArray[i].ComponentPropertiesTweens[property].IsExpanded)
-                                {
-                                    GUILayout.BeginVertical(_animationPropertyStyle);
-
-                                    GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentPropertiesTweens[property].SetNewAnimationValue(VisualizeObject(animationArray[i].ComponentPropertiesTweens[property].NewValue, "To"));
-                                    GUILayout.EndHorizontal();
-
-                                    GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentPropertiesTweens[property].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", animationArray[i].ComponentPropertiesTweens[property].IgnoreTimeScale);
-                                    GUILayout.EndHorizontal();
-
-                                    GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentPropertiesTweens[property].Duration = EditorGUILayout.FloatField("Duration", animationArray[i].ComponentPropertiesTweens[property].Duration);
-                                    animationArray[i].ComponentPropertiesTweens[property].Delay = EditorGUILayout.FloatField("Delay", animationArray[i].ComponentPropertiesTweens[property].Delay);
-                                    GUILayout.EndHorizontal();
-
-                                    GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentPropertiesTweens[property].Loops = EditorGUILayout.IntField("Loops", animationArray[i].ComponentPropertiesTweens[property].Loops);
-                                    animationArray[i].ComponentPropertiesTweens[property].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", animationArray[i].ComponentPropertiesTweens[property].LoopType);
-                                    GUILayout.EndHorizontal();
-
-                                    GUILayout.BeginHorizontal();
-                                    animationArray[i].ComponentPropertiesTweens[property].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", animationArray[i].ComponentPropertiesTweens[property].Ease);
+                                    animationArray[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", animationArray[i].ValuesTweens[value].Ease);
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.EndVertical();
@@ -250,7 +200,7 @@ namespace WyneAnimator
                 WAnimation[] newAnimationArray = newAnimationList.ToArray();
                 animationArrayInfo.SetValue(_animator, newAnimationArray);
                 _animatorSerializedObject.Update();
-                _selectedWAnimationArray = _animatorSerializedObject.FindProperty(_selectedWAnimationArray.name);
+                _selectedWAnimations = _animatorSerializedObject.FindProperty(_selectedWAnimations.name);
             }
 
             _animatorSerializedObject.ApplyModifiedProperties();
@@ -300,7 +250,7 @@ namespace WyneAnimator
 
         private void InitializeStyles()
         {
-            _animationPropertyStyle.normal.background = _animationPropertyTexture;
+            _WAnimationStyle.normal.background = _WAnimationTexture;
 
             _headerTextStyle.fontStyle = FontStyle.Bold;
             _headerTextStyle.normal.textColor = new Color(193f / 255f, 193f / 255f, 193f / 255f);
@@ -310,9 +260,9 @@ namespace WyneAnimator
 
         private void InitializeTextures()
         {
-            _animationPropertyTexture = new Texture2D(1, 1);
-            _animationPropertyTexture.SetPixel(0, 0, _animationPropertyColor);
-            _animationPropertyTexture.Apply();
+            _WAnimationTexture = new Texture2D(1, 1);
+            _WAnimationTexture.SetPixel(0, 0, _WAnimationColor);
+            _WAnimationTexture.Apply();
         }
 
     }

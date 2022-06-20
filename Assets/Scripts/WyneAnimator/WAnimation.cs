@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace WyneAnimator
@@ -12,16 +12,10 @@ namespace WyneAnimator
         [SerializeField] public Component AnimationComponent;
         [SerializeField] private Component _previousComponent;
 
-        private List<FieldInfo> _componentFields;
-        private List<PropertyInfo> _componentProperties;
-        public List<FieldInfo> ComponentFields { get => _componentFields; }
-        public List<PropertyInfo> ComponentProperties { get => _componentProperties; }
+        private List<ValueInfo> _componentValues;
+        public Dictionary<ValueInfo, WTween> ValuesTweens = new Dictionary<ValueInfo, WTween>();
 
-        public Dictionary<FieldInfo, WTween> ComponentFieldsTweens = new Dictionary<FieldInfo, WTween>();
-        public Dictionary<PropertyInfo, WTween> ComponentPropertiesTweens = new Dictionary<PropertyInfo, WTween>();
-
-        [SerializeField] public WTween[] SerializedComponentFieldsTweens;
-        [SerializeField] public WTween[] SerializedComponentPropertiesTweens;
+        [SerializeField] private WTween[] _serializedValuesTweens;
 
         [SerializeField] private bool _initialized = false;
         public bool Loaded = false;
@@ -34,95 +28,92 @@ namespace WyneAnimator
                 _previousComponent = AnimationComponent;
             }
 
-            if (AnimationComponent != null)
+            if (AnimationComponent == null) return;
+            if (_initialized) return;
+
+            _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+
+            ValuesTweens.Clear();
+            _serializedValuesTweens = new WTween[0];
+
+            foreach (ValueInfo valueInfo in _componentValues)
             {
-                if (!_initialized)
-                {
-                    AnimationComponent.GetType().ExcludeTypes(typeof(MonoBehaviour), out _componentFields, out _componentProperties);
-
-                    ComponentFieldsTweens.Clear();
-                    ComponentPropertiesTweens.Clear();
-
-                    SerializedComponentFieldsTweens = new WTween[0];
-                    SerializedComponentPropertiesTweens = new WTween[0];
-
-                    foreach (FieldInfo field in _componentFields)
-                    {
-                        if (!field.CheckReflectedValue()) continue;
-                        ComponentFieldsTweens.Add(field, new WTween(AnimationComponent, field, true, 0, 1, 0, DG.Tweening.Ease.Unset, DG.Tweening.LoopType.Restart));
-                    }
-
-                    foreach (PropertyInfo property in _componentProperties)
-                    {
-                        if (!property.CheckReflectedValue()) continue;
-                        ComponentPropertiesTweens.Add(property, new WTween(AnimationComponent, property, true, 0, 1, 0, DG.Tweening.Ease.Unset, DG.Tweening.LoopType.Restart));
-                    }
-
-                    _initialized = true;
-                }
+                if (!valueInfo.CheckType()) continue;
+                ValuesTweens.Add(valueInfo, new WTween(AnimationComponent, valueInfo, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
             }
+
+            _initialized = true;
         }
-        
+
         public void Load()
         {
-            if (AnimationComponent != null)
+            if (AnimationComponent == null) return;
+            if (_serializedValuesTweens.Length == 0) return;
+            if (Loaded) return;
+
+            _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+
+            foreach (ValueInfo valueInfo in _componentValues)
             {
-                if (!Loaded)
+                if (!valueInfo.CheckType()) continue;
+
+                bool tweenFound = false;
+                bool tokenFound = false;
+
+                foreach (WTween tween in _serializedValuesTweens)
                 {
-                    AnimationComponent.GetType().ExcludeTypes(typeof(MonoBehaviour), out _componentFields, out _componentProperties);
-
-                    foreach (FieldInfo field in _componentFields)
+                    if (tween.ValueMetadataToken == valueInfo.MemberInfo.MetadataToken)
                     {
-                        if (!field.CheckReflectedValue()) continue;
+                        tweenFound = true;
 
-                        bool found = false;
-
-                        foreach (WTween tween in SerializedComponentFieldsTweens)
+                        foreach (ValueInfo valueInfoKey in ValuesTweens.Keys)
                         {
-                            if (tween.ValueMetadataToken == field.MetadataToken)
+                            if (valueInfoKey.MemberInfo.MetadataToken == tween.ValueMetadataToken)
                             {
-                                found = true;
-                                ComponentFieldsTweens.AddOrReplace(field, tween);
-                                tween.UpdateNewAnimationValue();
+                                tokenFound = true;
                                 break;
                             }
                         }
 
-                        if (!found)
-                            ComponentFieldsTweens.AddOrReplace(field, new WTween(AnimationComponent, field, true, 0, 1, 0, DG.Tweening.Ease.Unset, DG.Tweening.LoopType.Restart));
+                        if (!tokenFound)
+                            ValuesTweens.Add(valueInfo, tween);
+
+                        break;
                     }
-
-                    foreach (PropertyInfo property in _componentProperties)
-                    {
-                        if (!property.CheckReflectedValue()) continue;
-
-                        bool found = false;
-
-                        foreach (WTween tween in SerializedComponentPropertiesTweens)
-                        {
-                            if (tween.ValueMetadataToken == property.MetadataToken)
-                            {
-                                found = true;
-                                ComponentPropertiesTweens.AddOrReplace(property, tween);
-                                tween.UpdateNewAnimationValue();
-                                break;
-                            }
-                        }
-
-                        if (!found)
-                            ComponentPropertiesTweens.AddOrReplace(property, new WTween(AnimationComponent, property, true, 0, 1, 0, DG.Tweening.Ease.Unset, DG.Tweening.LoopType.Restart));
-                    }
-
-                    Loaded = true;
                 }
+
+                if (!tweenFound)
+                    ValuesTweens.Add(valueInfo, new WTween(AnimationComponent, valueInfo, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
             }
+
+            foreach (WTween tween in ValuesTweens.Values)
+            {
+                tween.UpdateEndValue();
+            }
+
+            Loaded = true;
         }
 
         public void Serialize()
         {
-            SerializedComponentFieldsTweens = ComponentFieldsTweens.Values.ToArray();
-            SerializedComponentPropertiesTweens = ComponentPropertiesTweens.Values.ToArray();
+            _serializedValuesTweens = ValuesTweens.Values.ToArray();
+        }
+
+        public void InitializeTweens()
+        {
+            foreach (WTween tween in _serializedValuesTweens)
+            {
+                tween.UpdateValue();
+            }
+        }
+
+        public void StartTweens(MonoBehaviour holder)
+        {
+            foreach (WTween tween in _serializedValuesTweens)
+            {
+                tween.StartTween(holder);
+            }
         }
     }
-}
 
+}
