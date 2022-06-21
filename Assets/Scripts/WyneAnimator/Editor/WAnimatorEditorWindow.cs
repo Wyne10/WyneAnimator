@@ -4,6 +4,7 @@ using UnityEditor;
 using System.Linq;
 using System.Reflection;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace WyneAnimator
 {
@@ -16,9 +17,13 @@ namespace WyneAnimator
 
         private Vector2 _scrollPos = Vector2.zero;
 
-        private Texture2D _WAnimationTexture;
-        private Color _WAnimationColor = new Color(56f / 255f, 56f / 255f, 56f / 255f);
-        private GUIStyle _WAnimationStyle = new GUIStyle();
+        private Texture2D _WTweenTexture;
+        private Color _WTweenColor = new Color(56f / 255f, 56f / 255f, 56f / 255f);
+        private GUIStyle _WTweenStyle = new GUIStyle();
+
+        private Texture2D _blueWAnimationTexture;
+        private Color _blueWAnimationColor = new Color(58f / 255f, 154 / 255f, 200f / 255f);
+        private GUIStyle _blueWAnimationStyle = new GUIStyle(EditorStyles.foldout);
 
         private GUIStyle _headerTextStyle = new GUIStyle();
 
@@ -39,6 +44,15 @@ namespace WyneAnimator
             DrawAnimationInspector();
 
             EditorGUILayout.EndVertical();
+        }
+
+        private void Update()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                Debug.LogWarning("WARNING! Please close WAnimations Editor window before entering playmode, this may cause errors!");
+                this.Close();
+            }    
         }
 
         private void OnDestroy()
@@ -89,6 +103,18 @@ namespace WyneAnimator
                         _animator.Animations[i].AnimationConditionType = (WAnimationConditionType)EditorGUILayout.EnumPopup("Condition", _animator.Animations[i].AnimationConditionType);
                         _animator.Animations[i].AnimationConditionObject = (GameObject)EditorGUILayout.ObjectField("Condition Object", _animator.Animations[i].AnimationConditionObject, typeof(GameObject), true);
 
+                        if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnClick)
+                        {
+                            if (_animator.Animations[i].AnimationConditionObject != null)
+                            {
+                                if (_animator.Animations[i].AnimationConditionObject.GetComponent<Button>() == null)
+                                {
+                                    Debug.LogWarning("No 'Button' Component was found on " + _animator.Animations[i].AnimationConditionObject.name + "!");
+                                    _animator.Animations[i].AnimationConditionObject = null;
+                                }
+                            }
+                        }
+
                         _animator.Animations[i].AnimationComponent = (Component)EditorGUILayout.ObjectField("Animated Component", _animator.Animations[i].AnimationComponent, typeof(Component), true);
                         _animator.Animations[i].Initialize();
                         _animator.Animations[i].Load();
@@ -99,14 +125,28 @@ namespace WyneAnimator
                         {
                             foreach (ValueInfo value in _animator.Animations[i].ValuesTweens.Keys)
                             {
-                                _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
+                                _animator.Animations[i].ValuesTweens[value].UpdateValue();
+
+                                if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent)))
+                                {
+                                    _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWAnimationStyle);
+                                }
+                                else
+                                {
+                                    _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
+                                }
 
                                 if (_animator.Animations[i].ValuesTweens[value].IsExpanded)
                                 {
-                                    GUILayout.BeginVertical(_WAnimationStyle);
+                                    GUILayout.BeginVertical(_WTweenStyle);
 
                                     GUILayout.BeginHorizontal();
                                     _animator.Animations[i].ValuesTweens[value].EndValue = VisualizeObject(_animator.Animations[i].ValuesTweens[value].EndValue, "To");
+
+                                    if (GUILayout.Button("Reset", GUILayout.Width(75f)))
+                                    {
+                                        _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
+                                    }
                                     GUILayout.EndHorizontal();
 
                                     GUILayout.BeginHorizontal();
@@ -190,7 +230,10 @@ namespace WyneAnimator
 
         private void InitializeStyles()
         {
-            _WAnimationStyle.normal.background = _WAnimationTexture;
+            _WTweenStyle.normal.background = _WTweenTexture;
+
+            _blueWAnimationStyle.normal.background = _blueWAnimationTexture;
+            _blueWAnimationStyle.fixedWidth = 500;
 
             _headerTextStyle.fontStyle = FontStyle.Bold;
             _headerTextStyle.normal.textColor = new Color(193f / 255f, 193f / 255f, 193f / 255f);
@@ -200,9 +243,13 @@ namespace WyneAnimator
 
         private void InitializeTextures()
         {
-            _WAnimationTexture = new Texture2D(1, 1);
-            _WAnimationTexture.SetPixel(0, 0, _WAnimationColor);
-            _WAnimationTexture.Apply();
+            _WTweenTexture = new Texture2D(1, 1);
+            _WTweenTexture.SetPixel(0, 0, _WTweenColor);
+            _WTweenTexture.Apply();
+
+            _blueWAnimationTexture = new Texture2D(1, 1);
+            _blueWAnimationTexture.SetPixel(0, 0, _blueWAnimationColor);
+            _blueWAnimationTexture.Apply();
         }
 
     }

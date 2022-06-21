@@ -75,6 +75,10 @@
     <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\ColorTween.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\ValueInfo\PropertyValueInfo.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\WAnimation.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\OnEnableWAC.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\OnDisableWAC.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\OnDestroyWAC.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\OnClickWAC.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

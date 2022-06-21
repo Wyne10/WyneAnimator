@@ -21,7 +21,16 @@ namespace WyneAnimator
         }
         [SerializeReference] private WAnimationCondition _animationCondition;
 
-        [SerializeField] public GameObject AnimationConditionObject;
+        [SerializeField] private GameObject _animationConditionObject;
+        public GameObject AnimationConditionObject
+        {
+            get => _animationConditionObject;
+            set
+            {
+                _animationConditionObject = value;
+                SetAnimationCondition(_animationConditionType);
+            }
+        }
 
         [SerializeField] public Component AnimationComponent;
         [SerializeField] private Component _previousComponent;
@@ -128,6 +137,9 @@ namespace WyneAnimator
 
         private IEnumerator AnimationCoroutine(MonoBehaviour holder)
         {
+            if (_animationCondition == null) yield break;
+            if (_animationConditionObject == null) yield break;
+
             while (true)
             {
                 if (_animationCondition.CheckCondition())
@@ -144,14 +156,28 @@ namespace WyneAnimator
 
         private void SetAnimationCondition(WAnimationConditionType conditionType)
         {
+            if (_animationConditionObject == null) return;
+
             if (conditionType == WAnimationConditionType.OnStart)
-                _animationCondition = new OnStartWAC(AnimationConditionObject, AnimationComponent);
+                _animationCondition = new OnStartWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnEnable)
+                _animationCondition = new OnEnableWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnDisable)
+                _animationCondition = new OnDisableWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnDestroy)
+                _animationCondition = new OnDestroyWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnClick)
+                _animationCondition = new OnClickWAC(_animationConditionObject, AnimationComponent);
         }
     }
 
     public enum WAnimationConditionType
     {
-        OnStart
+        OnStart,
+        OnEnable,
+        OnDisable,
+        OnDestroy,
+        OnClick
     }
 
 }

@@ -10,7 +10,7 @@ namespace WyneAnimator
     {
         [SerializeField] private Component _animationComponent;
 
-        private ValueInfo _value;
+        public ValueInfo Value;
         [SerializeField] private int _valueMetadataToken;
         public int ValueMetadataToken { get => _valueMetadataToken; }
 
@@ -49,14 +49,14 @@ namespace WyneAnimator
 
         public WTween(Component animationComponent, ValueInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale) : this(animationComponent, delay, duration, ease, loops, loopType, ignoreTimeScale)
         {
-            _value = value;
+            Value = value;
             _valueMetadataToken = value.MemberInfo.MetadataToken;
             EndValue = value.GetValue(animationComponent);
         }
 
         public void StartTween(MonoBehaviour holder)
         {
-            _typeTween.StartTween(_animationComponent, holder, _value, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
+            _typeTween.StartTween(_animationComponent, holder, Value, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
         }
 
         private void SetTypeTween(object value)
@@ -97,7 +97,7 @@ namespace WyneAnimator
 
                 if (valueInfo.MemberInfo.MetadataToken == _valueMetadataToken)
                 {
-                    _value = valueInfo;
+                    Value = valueInfo;
                     return;
                 }
             }

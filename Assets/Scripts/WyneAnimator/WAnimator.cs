@@ -14,16 +14,12 @@ namespace WyneAnimator
             {
                 animation.InitializeTweens();
             }
-        }
 
-        private void Start()
-        {
             foreach (WAnimation animation in Animations)
             {
                 animation.StartAnimation(this);
             }
         }
-
     }
 }
 
