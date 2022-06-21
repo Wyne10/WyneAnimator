@@ -9,6 +9,20 @@ namespace WyneAnimator
     [Serializable]
     public class WAnimation
     {
+        [SerializeField] private WAnimationConditionType _animationConditionType;
+        public WAnimationConditionType AnimationConditionType
+        {
+            get => _animationConditionType;
+            set
+            {
+                _animationConditionType = value;
+                SetAnimationCondition(value);
+            }
+        }
+        [SerializeReference] private WAnimationCondition _animationCondition;
+
+        [SerializeField] public GameObject AnimationConditionObject;
+
         [SerializeField] public Component AnimationComponent;
         [SerializeField] private Component _previousComponent;
 
@@ -107,13 +121,37 @@ namespace WyneAnimator
             }
         }
 
-        public void StartTweens(MonoBehaviour holder)
+        public void StartAnimation(MonoBehaviour holder)
         {
-            foreach (WTween tween in _serializedValuesTweens)
+            holder.StartCoroutine(AnimationCoroutine(holder));
+        }
+
+        private IEnumerator AnimationCoroutine(MonoBehaviour holder)
+        {
+            while (true)
             {
-                tween.StartTween(holder);
+                if (_animationCondition.CheckCondition())
+                {
+                    foreach (WTween tween in _serializedValuesTweens)
+                    {
+                        tween.StartTween(holder);
+                    }
+                }
+
+                yield return null;
             }
         }
+
+        private void SetAnimationCondition(WAnimationConditionType conditionType)
+        {
+            if (conditionType == WAnimationConditionType.OnStart)
+                _animationCondition = new OnStartWAC(AnimationConditionObject, AnimationComponent);
+        }
+    }
+
+    public enum WAnimationConditionType
+    {
+        OnStart
     }
 
 }

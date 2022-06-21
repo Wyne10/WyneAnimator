@@ -275,12 +275,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1966d04427582a443bd72cf27b801f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStartAnimations:
-  - AnimationComponent: {fileID: 500815921}
+  Animations:
+  - _animationConditionType: 0
+    _animationCondition:
+      id: 0
+    AnimationConditionObject: {fileID: 500815919}
+    AnimationComponent: {fileID: 500815921}
     _previousComponent: {fileID: 500815921}
-    _serializedValuesTweens: []
+    _serializedValuesTweens:
+    - _animationComponent: {fileID: 500815921}
+      _valueMetadataToken: 67108865
+      _typeTween:
+        id: 1
+      Delay: 0
+      Duration: 3
+      Ease: 0
+      Loops: 0
+      LoopType: 0
+      IgnoreTimeScale: 0
+      IsExpanded: 1
+    - _animationComponent: {fileID: 500815921}
+      _valueMetadataToken: 67108866
+      _typeTween:
+        id: 2
+      Delay: 0
+      Duration: 1
+      Ease: 0
+      Loops: 0
+      LoopType: 0
+      IgnoreTimeScale: 0
+      IsExpanded: 0
+    - _animationComponent: {fileID: 500815921}
+      _valueMetadataToken: 67108867
+      _typeTween:
+        id: 3
+      Delay: 0
+      Duration: 1
+      Ease: 0
+      Loops: 0
+      LoopType: 0
+      IgnoreTimeScale: 0
+      IsExpanded: 0
+    - _animationComponent: {fileID: 500815921}
+      _valueMetadataToken: 67108868
+      _typeTween:
+        id: 4
+      Delay: 0
+      Duration: 1
+      Ease: 0
+      Loops: 0
+      LoopType: 0
+      IgnoreTimeScale: 0
+      IsExpanded: 0
     _initialized: 1
     Loaded: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: OnStartWAC, ns: WyneAnimator, asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 500815919}
+        _component: {fileID: 500815921}
+    00000001:
+      type: {class: IntTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      data:
+        _endValue: 10
+    00000002:
+      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      data:
+        _endValue: 0
+    00000003:
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
+      data:
+        _endValue: {x: 0, y: 0, z: 0}
+    00000004:
+      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      data:
+        _endValue: 0
 --- !u!114 &500815923
 MonoBehaviour:
   m_ObjectHideFlags: 0

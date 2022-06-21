@@ -59,20 +59,22 @@
     <Compile Include="Assets\Scripts\WyneAnimator\ValueInfo\FieldValueInfo.cs" />
     <Compile Include="Assets\Scripts\MethodExtensions\TypeExtensions.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\ITypeTween.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\Vector3Tween.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\TypeTween.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\IntTween.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\FloatTween.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\Vector2Tween.cs" />
     <Compile Include="Assets\Scripts\TestScript.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\WTween.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\WAnimationCondition.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\ValueInfo\IValueInfo.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\ValueInfo\ValueInfo.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\AnimationConditions\OnStartWAC.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\WAnimator.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\BoolTween.cs" />
+    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\ColorTween.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\ValueInfo\PropertyValueInfo.cs" />
     <Compile Include="Assets\Scripts\WyneAnimator\WAnimation.cs" />
-    <Compile Include="Assets\Scripts\WyneAnimator\WAnimator.cs" />
-    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\ColorTween.cs" />
-    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\Vector2Tween.cs" />
-    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\Vector3Tween.cs" />
-    <Compile Include="Assets\Scripts\WyneAnimator\TypeTweens\BoolTween.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

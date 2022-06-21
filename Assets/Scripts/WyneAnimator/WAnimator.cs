@@ -6,11 +6,11 @@ namespace WyneAnimator
 {
     public class WAnimator : MonoBehaviour
     {
-        [SerializeField] public WAnimation[] OnStartAnimations;
+        [SerializeField] public WAnimation[] Animations;
 
         private void Awake()
         {
-            foreach (WAnimation animation in OnStartAnimations)
+            foreach (WAnimation animation in Animations)
             {
                 animation.InitializeTweens();
             }
@@ -18,9 +18,9 @@ namespace WyneAnimator
 
         private void Start()
         {
-            foreach (WAnimation animation in OnStartAnimations)
+            foreach (WAnimation animation in Animations)
             {
-                animation.StartTweens(this);
+                animation.StartAnimation(this);
             }
         }
 
