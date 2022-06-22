@@ -4,6 +4,8 @@ using UnityEditor;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace WS.WyneAnimator
 {
@@ -34,6 +36,8 @@ namespace WS.WyneAnimator
             window._WAnimations = window._animatorSerializedObject.FindProperty("Animations");
             window.InitializeTextures();
             window.InitializeStyles();
+
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
         private void OnGUI()
@@ -56,12 +60,12 @@ namespace WS.WyneAnimator
 
         private void OnDestroy()
         {
-            _animatorSerializedObject.ApplyModifiedProperties();
-
             foreach (WAnimation animation in _animator.Animations)
             {
                 animation.Loaded = false;
             }
+
+            _animatorSerializedObject.ApplyModifiedProperties();
         }
 
         private void DrawAnimationInspector()
