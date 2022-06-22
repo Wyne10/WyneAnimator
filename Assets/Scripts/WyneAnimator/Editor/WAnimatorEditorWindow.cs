@@ -101,7 +101,16 @@ namespace WyneAnimator
                         EditorGUILayout.Space(10);
 
                         _animator.Animations[i].AnimationConditionType = (WAnimationConditionType)EditorGUILayout.EnumPopup("Condition", _animator.Animations[i].AnimationConditionType);
-                        _animator.Animations[i].AnimationConditionObject = (GameObject)EditorGUILayout.ObjectField("Condition Object", _animator.Animations[i].AnimationConditionObject, typeof(GameObject), true);
+
+                        if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnTrigger)
+                        {
+                            _animator.Animations[i].TriggerName = EditorGUILayout.TextField("Trigger Name", _animator.Animations[i].TriggerName);
+                        }
+                        else
+                        {
+                            _animator.Animations[i].TriggerName = "";
+                            _animator.Animations[i].AnimationConditionObject = (GameObject)EditorGUILayout.ObjectField("Condition Object", _animator.Animations[i].AnimationConditionObject, typeof(GameObject), true);
+                        }
 
                         if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnClick)
                         {
@@ -172,10 +181,11 @@ namespace WyneAnimator
 
                                 EditorGUILayout.Space(10);
                             }
+
+                            _animator.Animations[i].Serialize();
                         }
                     }
 
-                    _animator.Animations[i].Serialize();
                     i++;
                     EditorGUILayout.EndVertical();
                     EditorGUILayout.Space(10);

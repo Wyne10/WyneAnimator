@@ -32,13 +32,15 @@ namespace WyneAnimator
             }
         }
 
+        [SerializeField] public string TriggerName;
+
         [SerializeField] public Component AnimationComponent;
         [SerializeField] private Component _previousComponent;
 
         private List<ValueInfo> _componentValues;
         public Dictionary<ValueInfo, WTween> ValuesTweens = new Dictionary<ValueInfo, WTween>();
 
-        [SerializeField] private WTween[] _serializedValuesTweens;
+        [SerializeField] public WTween[] _serializedValuesTweens;
 
         [SerializeField] private bool _initialized = false;
         public bool Loaded = false;
@@ -135,6 +137,14 @@ namespace WyneAnimator
             holder.StartCoroutine(AnimationCoroutine(holder));
         }
 
+        internal void ForceStartAnimation(MonoBehaviour holder)
+        {
+            foreach (WTween tween in _serializedValuesTweens)
+            {
+                tween.StartTween(holder);
+            }
+        }
+
         private IEnumerator AnimationCoroutine(MonoBehaviour holder)
         {
             if (_animationCondition == null) yield break;
@@ -168,6 +178,10 @@ namespace WyneAnimator
                 _animationCondition = new OnDestroyWAC(_animationConditionObject, AnimationComponent);
             else if (conditionType == WAnimationConditionType.OnClick)
                 _animationCondition = new OnClickWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnUIHover)
+                _animationCondition = new OnUIHoverWAC(_animationConditionObject, AnimationComponent);
+            else if (conditionType == WAnimationConditionType.OnUIUnHover)
+                _animationCondition = new OnUIUnHoverWAC(_animationConditionObject, AnimationComponent);
         }
     }
 
@@ -177,7 +191,10 @@ namespace WyneAnimator
         OnEnable,
         OnDisable,
         OnDestroy,
-        OnClick
+        OnClick,
+        OnTrigger,
+        OnUIHover,
+        OnUIUnHover
     }
 
 }

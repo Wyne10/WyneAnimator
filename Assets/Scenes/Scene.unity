@@ -153,10 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animations:
-  - _animationConditionType: 0
+  - _animationConditionType: 6
     _animationCondition:
       id: 0
     _animationConditionObject: {fileID: 500815919}
+    TriggerName: 
     AnimationComponent: {fileID: 500815920}
     _previousComponent: {fileID: 500815920}
     _serializedValuesTweens:
@@ -187,12 +188,12 @@ MonoBehaviour:
       _typeTween:
         id: 3
       Delay: 0
-      Duration: 3
-      Ease: 16
-      Loops: 2
-      LoopType: 1
+      Duration: 1
+      Ease: 0
+      Loops: 0
+      LoopType: 0
       IgnoreTimeScale: 0
-      IsExpanded: 1
+      IsExpanded: 0
     - _animationComponent: {fileID: 500815920}
       _valueMetadataToken: 385877679
       _typeTween:
@@ -330,8 +331,8 @@ MonoBehaviour:
       _typeTween:
         id: 16
       Delay: 0
-      Duration: 1
-      Ease: 0
+      Duration: 0.1
+      Ease: 31
       Loops: 0
       LoopType: 0
       IgnoreTimeScale: 0
@@ -360,15 +361,16 @@ MonoBehaviour:
       IsExpanded: 0
     _initialized: 1
     Loaded: 0
-  - _animationConditionType: 4
+  - _animationConditionType: 7
     _animationCondition:
       id: 19
     _animationConditionObject: {fileID: 500815919}
-    AnimationComponent: {fileID: 500815924}
-    _previousComponent: {fileID: 500815924}
+    TriggerName: 
+    AnimationComponent: {fileID: 500815920}
+    _previousComponent: {fileID: 500815920}
     _serializedValuesTweens:
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108980
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877676
       _typeTween:
         id: 20
       Delay: 0
@@ -378,8 +380,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108981
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877677
       _typeTween:
         id: 21
       Delay: 0
@@ -389,8 +391,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108983
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877678
       _typeTween:
         id: 22
       Delay: 0
@@ -400,8 +402,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108984
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877679
       _typeTween:
         id: 23
       Delay: 0
@@ -411,8 +413,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108985
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877680
       _typeTween:
         id: 24
       Delay: 0
@@ -422,8 +424,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108986
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877681
       _typeTween:
         id: 25
       Delay: 0
@@ -433,8 +435,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108987
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877682
       _typeTween:
         id: 26
       Delay: 0
@@ -444,8 +446,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108988
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877683
       _typeTween:
         id: 27
       Delay: 0
@@ -455,8 +457,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108989
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877686
       _typeTween:
         id: 28
       Delay: 0
@@ -466,8 +468,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108990
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877687
       _typeTween:
         id: 29
       Delay: 0
@@ -477,8 +479,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67109113
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877688
       _typeTween:
         id: 30
       Delay: 0
@@ -488,8 +490,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67109118
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877689
       _typeTween:
         id: 31
       Delay: 0
@@ -499,8 +501,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67109120
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877690
       _typeTween:
         id: 32
       Delay: 0
@@ -510,8 +512,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67109121
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877691
       _typeTween:
         id: 33
       Delay: 0
@@ -521,8 +523,8 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108945
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877692
       _typeTween:
         id: 34
       Delay: 0
@@ -532,19 +534,19 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 67108946
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877696
       _typeTween:
         id: 35
       Delay: 0
-      Duration: 1
-      Ease: 0
+      Duration: 0.1
+      Ease: 31
       Loops: 0
       LoopType: 0
       IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876037
+      IsExpanded: 1
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877704
       _typeTween:
         id: 36
       Delay: 0
@@ -554,142 +556,10 @@ MonoBehaviour:
       LoopType: 0
       IgnoreTimeScale: 0
       IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876038
+    - _animationComponent: {fileID: 500815920}
+      _valueMetadataToken: 385877705
       _typeTween:
         id: 37
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876040
-      _typeTween:
-        id: 38
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876041
-      _typeTween:
-        id: 39
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876042
-      _typeTween:
-        id: 40
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876043
-      _typeTween:
-        id: 41
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876044
-      _typeTween:
-        id: 42
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876045
-      _typeTween:
-        id: 43
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876049
-      _typeTween:
-        id: 44
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876168
-      _typeTween:
-        id: 45
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876169
-      _typeTween:
-        id: 46
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876011
-      _typeTween:
-        id: 47
-      Delay: 0
-      Duration: 0.05
-      Ease: 4
-      Loops: 2
-      LoopType: 1
-      IgnoreTimeScale: 0
-      IsExpanded: 1
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876012
-      _typeTween:
-        id: 48
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815924}
-      _valueMetadataToken: 385876014
-      _typeTween:
-        id: 49
       Delay: 0
       Duration: 1
       Ease: 0
@@ -702,7 +572,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: OnStartWAC, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: OnUIHoverWAC, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
         _gameObject: {fileID: 500815919}
         _component: {fileID: 500815920}
@@ -717,7 +587,7 @@ MonoBehaviour:
     00000003:
       type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: {x: 0, y: 250}
+        _endValue: {x: 0, y: 0}
     00000004:
       type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
@@ -769,7 +639,7 @@ MonoBehaviour:
     00000010:
       type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: {x: 1, y: 1, z: 1}
+        _endValue: {x: 2, y: 2, z: 2}
     00000011:
       type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
@@ -779,131 +649,82 @@ MonoBehaviour:
       data:
         _endValue: 3
     00000013:
-      type: {class: OnClickWAC, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: OnUIUnHoverWAC, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
         _gameObject: {fileID: 500815919}
-        _component: {fileID: 500815924}
-        _button: {fileID: 500815923}
+        _component: {fileID: 500815920}
     00000014:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 0.5, y: 0.5}
     00000015:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 1
+        _endValue: {x: 0.5, y: 0.5}
     00000016:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 1
+        _endValue: {x: 0, y: 0}
     00000017:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 1
+        _endValue: {x: 160, y: 30}
     00000018:
-      type: {class: IntTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 0.5, y: 0.5}
     00000019:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 0, y: 0, z: 0}
     0000001A:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: -80, y: -15}
     0000001B:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 80, y: 15}
     0000001C:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 1
+        _endValue: {x: 459.5, y: 206.5, z: 0}
     0000001D:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 100
+        _endValue: {x: 0, y: 0, z: 0}
     0000001E:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: -0, y: 0, z: 0}
     0000001F:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: -0, y: 0, z: 0}
     00000020:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 1
+        _endValue: {x: 1, y: 0, z: 0}
     00000021:
-      type: {class: IntTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 0, y: 1, z: 0}
     00000022:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 0, y: 0, z: 1}
     00000023:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
+      type: {class: Vector3Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: {x: 1, y: 1, z: 1}
     00000024:
       type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
+        _endValue: 1
     00000025:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    00000026:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    00000027:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    00000028:
       type: {class: IntTween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
-        _endValue: 0
-    00000029:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    0000002A:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 0
-    0000002B:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 0
-    0000002C:
-      type: {class: FloatTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    0000002D:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    0000002E:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 0
-    0000002F:
-      type: {class: ColorTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: {r: 0.3995639, g: 0.6517089, b: 0.6886792, a: 1}
-    00000030:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 1
-    00000031:
-      type: {class: BoolTween, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _endValue: 0
+        _endValue: 3
 --- !u!4 &66087575
 Transform:
   m_ObjectHideFlags: 0
