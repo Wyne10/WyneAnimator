@@ -135,7 +135,13 @@ namespace WS.WyneAnimator
                             {
                                 _animator.Animations[i].ValuesTweens[value].UpdateValue();
 
-                                if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent)))
+                                if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent))
+                                    || _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale != false
+                                    || _animator.Animations[i].ValuesTweens[value].Duration != 1
+                                    || _animator.Animations[i].ValuesTweens[value].Delay != 0
+                                    || _animator.Animations[i].ValuesTweens[value].Loops != 0
+                                    || _animator.Animations[i].ValuesTweens[value].LoopType != LoopType.Restart
+                                    || _animator.Animations[i].ValuesTweens[value].Ease != Ease.Unset)
                                 {
                                     _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWAnimationStyle);
                                 }
