@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     public class FieldValueInfo : IValueInfo
     {

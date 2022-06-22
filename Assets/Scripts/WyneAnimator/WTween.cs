@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class WTween

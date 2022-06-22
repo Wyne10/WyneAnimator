@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class FloatTween : TypeTween<float>

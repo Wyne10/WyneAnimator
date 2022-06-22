@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class OnEnableWAC : WAnimationCondition
@@ -13,7 +13,7 @@ namespace WyneAnimator
 
         public override bool CheckCondition()
         {
-            if (_gameObject.activeSelf && _previousGameObjectState == false)
+            if (_gameObject.activeSelf && !_previousGameObjectState)
             {
                 _previousGameObjectState = true;
                 return true;

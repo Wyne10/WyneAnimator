@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class OnClickWAC : WAnimationCondition
@@ -18,7 +18,7 @@ namespace WyneAnimator
 
         public override bool CheckCondition()
         {
-            if (_isEventAdded == false && _button != null)
+            if (!_isEventAdded && _button != null)
             {
                 _button.onClick.AddListener(delegate { _isClicked = true; });
                 _isEventAdded = true;

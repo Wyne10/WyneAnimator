@@ -161,204 +161,60 @@ MonoBehaviour:
     AnimationComponent: {fileID: 500815920}
     _previousComponent: {fileID: 500815920}
     _serializedValuesTweens:
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877676
-      _typeTween:
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877676, _typeTween:
         id: 1
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877677
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877677, _typeTween:
         id: 2
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877678
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877678, _typeTween:
         id: 3
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877679
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877679, _typeTween:
         id: 4
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877680
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877680, _typeTween:
         id: 5
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877681
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877681, _typeTween:
         id: 6
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877682
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877682, _typeTween:
         id: 7
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877683
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877683, _typeTween:
         id: 8
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877686
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877686, _typeTween:
         id: 9
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877687
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877687, _typeTween:
         id: 10
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877688
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877688, _typeTween:
         id: 11
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877689
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877689, _typeTween:
         id: 12
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877690
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877690, _typeTween:
         id: 13
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877691
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877691, _typeTween:
         id: 14
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877692
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877692, _typeTween:
         id: 15
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877696
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877696, _typeTween:
         id: 16
-      Delay: 0
-      Duration: 0.1
-      Ease: 31
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877704
-      _typeTween:
+, Delay: 0, Duration: 0.1, Ease: 31, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877704, _typeTween:
         id: 17
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877705
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877705, _typeTween:
         id: 18
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
     _initialized: 1
     Loaded: 0
   - _animationConditionType: 7
@@ -369,213 +225,67 @@ MonoBehaviour:
     AnimationComponent: {fileID: 500815920}
     _previousComponent: {fileID: 500815920}
     _serializedValuesTweens:
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877676
-      _typeTween:
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877676, _typeTween:
         id: 20
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877677
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877677, _typeTween:
         id: 21
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877678
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877678, _typeTween:
         id: 22
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877679
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877679, _typeTween:
         id: 23
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877680
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877680, _typeTween:
         id: 24
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877681
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877681, _typeTween:
         id: 25
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877682
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877682, _typeTween:
         id: 26
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877683
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877683, _typeTween:
         id: 27
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877686
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877686, _typeTween:
         id: 28
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877687
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877687, _typeTween:
         id: 29
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877688
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877688, _typeTween:
         id: 30
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877689
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877689, _typeTween:
         id: 31
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877690
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877690, _typeTween:
         id: 32
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877691
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877691, _typeTween:
         id: 33
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877692
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877692, _typeTween:
         id: 34
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877696
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877696, _typeTween:
         id: 35
-      Delay: 0
-      Duration: 0.1
-      Ease: 31
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 1
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877704
-      _typeTween:
+, Delay: 0, Duration: 0.1, Ease: 31, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 1}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877704, _typeTween:
         id: 36
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
-    - _animationComponent: {fileID: 500815920}
-      _valueMetadataToken: 385877705
-      _typeTween:
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
+    - {_animationComponent: {fileID: 500815920}, _valueMetadataToken: 385877705, _typeTween:
         id: 37
-      Delay: 0
-      Duration: 1
-      Ease: 0
-      Loops: 0
-      LoopType: 0
-      IgnoreTimeScale: 0
-      IsExpanded: 0
+, Delay: 0, Duration: 1, Ease: 0, Loops: 0, LoopType: 0, IgnoreTimeScale: 0, IsExpanded: 0}
     _initialized: 1
     Loaded: 0
   references:
     version: 1
     00000000:
       type: {class: OnUIHoverWAC, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _gameObject: {fileID: 500815919}
-        _component: {fileID: 500815920}
+      data: {_gameObject: {fileID: 500815919}, _component: {fileID: 500815920}, _initialized: 0, _activated: 0, _raycaster: {fileID: 0}, _eventSystem: {fileID: 0}}
     00000001:
       type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
@@ -650,9 +360,7 @@ MonoBehaviour:
         _endValue: 3
     00000013:
       type: {class: OnUIUnHoverWAC, ns: WyneAnimator, asm: Assembly-CSharp}
-      data:
-        _gameObject: {fileID: 500815919}
-        _component: {fileID: 500815920}
+      data: {_gameObject: {fileID: 500815919}, _component: {fileID: 500815920}, _initialized: 0, _activated: 0, _raycaster: {fileID: 0}, _eventSystem: {fileID: 0}}
     00000014:
       type: {class: Vector2Tween, ns: WyneAnimator, asm: Assembly-CSharp}
       data:
@@ -834,7 +542,6 @@ GameObject:
   - component: {fileID: 500815925}
   - component: {fileID: 500815924}
   - component: {fileID: 500815923}
-  - component: {fileID: 500815921}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -862,22 +569,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &500815921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500815919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4127e90c90c45b048bdc4b46b512dc22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 0
-  _height: 0
-  _vector: {x: 0, y: 0, z: 0}
-  _bool: 0
 --- !u!114 &500815923
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class WAnimation
@@ -40,7 +40,7 @@ namespace WyneAnimator
         private List<ValueInfo> _componentValues;
         public Dictionary<ValueInfo, WTween> ValuesTweens = new Dictionary<ValueInfo, WTween>();
 
-        [SerializeField] public WTween[] _serializedValuesTweens;
+        [SerializeField] private WTween[] _serializedValuesTweens;
 
         [SerializeField] private bool _initialized = false;
         public bool Loaded = false;

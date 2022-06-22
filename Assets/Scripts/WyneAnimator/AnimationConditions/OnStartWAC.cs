@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class OnStartWAC : WAnimationCondition

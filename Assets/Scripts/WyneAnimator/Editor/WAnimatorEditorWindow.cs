@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
-using System.Reflection;
 using DG.Tweening;
 using UnityEngine.UI;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     public class WAnimatorEditorWindow : EditorWindow
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     public class ValueInfo
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace WyneAnimator
+namespace WS.WyneAnimator
 {
     [Serializable]
     public class OnUIHoverWAC : WAnimationCondition
@@ -31,7 +31,7 @@ namespace WyneAnimator
             if (_raycaster == null) { Debug.LogWarning("Couldn't find 'Canvas' object to handle OnUIHover condition!"); return false; }
             if (_eventSystem == null) { Debug.LogWarning("Couldn't find 'EventSystem' object to handle OnUIHover condition!"); return false; }
 
-            if (_activated == false && EventSystem.current.IsPointerOverGameObject())
+            if (!_activated && EventSystem.current.IsPointerOverGameObject())
             {
                 _pointerEventData.position = Input.mousePosition;
                 List<RaycastResult> results = new List<RaycastResult>();
@@ -47,7 +47,7 @@ namespace WyneAnimator
                 }
             }
 
-            if (_activated == true && !EventSystem.current.IsPointerOverGameObject())
+            if (_activated && !EventSystem.current.IsPointerOverGameObject())
             {
                 _activated = false;
             }
