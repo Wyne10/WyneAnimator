@@ -90,6 +90,7 @@ namespace WS.WyneAnimator
         public void UpdateValue()
         {
             List<ValueInfo> componentValues = _animationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+            componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
 
             foreach (ValueInfo valueInfo in componentValues)
             {
