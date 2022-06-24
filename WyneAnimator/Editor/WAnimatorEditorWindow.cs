@@ -37,6 +37,9 @@ namespace WS.WyneAnimator
             window.InitializeTextures();
             window.InitializeStyles();
 
+            if (window._animator.Animations == null)
+                window._animator.Animations = new WAnimation[0];
+
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
@@ -167,23 +170,33 @@ namespace WS.WyneAnimator
                                     }
                                     GUILayout.EndHorizontal();
 
-                                    GUILayout.BeginHorizontal();
-                                    _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
-                                    GUILayout.EndHorizontal();
+                                    if (_animator.Animations[i].ValuesTweens[value].EndValue.GetType() != typeof(bool))
+                                    {
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
+                                        GUILayout.EndHorizontal();
 
-                                    GUILayout.BeginHorizontal();
-                                    _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
-                                    _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
-                                    GUILayout.EndHorizontal();
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
+                                        _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                        GUILayout.EndHorizontal();
 
-                                    GUILayout.BeginHorizontal();
-                                    _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
-                                    _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
-                                    GUILayout.EndHorizontal();
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
+                                        _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
+                                        GUILayout.EndHorizontal();
 
-                                    GUILayout.BeginHorizontal();
-                                    _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
-                                    GUILayout.EndHorizontal();
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
+                                        GUILayout.EndHorizontal();
+                                    }
+                                    else
+                                    {
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                        GUILayout.EndHorizontal();
+                                    }
+ 
 
                                     GUILayout.EndVertical();
                                 }

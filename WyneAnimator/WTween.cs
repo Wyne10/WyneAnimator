@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -90,7 +91,8 @@ namespace WS.WyneAnimator
         public void UpdateValue()
         {
             List<ValueInfo> componentValues = _animationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
+            if (_animationComponent.GetType().GetProperty("enabled") != null)
+                componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
 
             foreach (ValueInfo valueInfo in componentValues)
             {
