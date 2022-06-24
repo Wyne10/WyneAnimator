@@ -68,7 +68,10 @@ namespace WS.WyneAnimator
                 animation.Loaded = false;
             }
 
+            if (PrefabUtility.IsPartOfAnyPrefab(_animator.gameObject))
+                PrefabUtility.ApplyPrefabInstance(_animator.gameObject, InteractionMode.UserAction);
             _animatorSerializedObject.ApplyModifiedProperties();
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
         private void DrawAnimationInspector()
@@ -155,6 +158,15 @@ namespace WS.WyneAnimator
                                 else
                                 {
                                     _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
+                                }
+
+                                if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent)))
+                                {
+                                    _animator.Animations[i].ValuesTweens[value].Animate = true;
+                                }
+                                else
+                                {
+                                    _animator.Animations[i].ValuesTweens[value].Animate = false;
                                 }
 
                                 if (_animator.Animations[i].ValuesTweens[value].IsExpanded)

@@ -28,6 +28,8 @@ namespace WS.WyneAnimator
 
         [SerializeField] public bool IsExpanded = false;
 
+        [SerializeField] public bool Animate = false;
+
         public object EndValue 
         { get => _endValue;
           set
@@ -52,12 +54,13 @@ namespace WS.WyneAnimator
         {
             Value = value;
             _valueMetadataToken = value.MemberInfo.MetadataToken;
-            EndValue = value.GetValue(animationComponent);
+            EndValue = Value.GetValue(animationComponent);
         }
 
         public void StartTween(MonoBehaviour holder)
         {
-            _typeTween.StartTween(_animationComponent, holder, Value, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
+            if (Animate)
+                _typeTween.StartTween(_animationComponent, holder, Value, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
         }
 
         private void SetTypeTween(object value)
