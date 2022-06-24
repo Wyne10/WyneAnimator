@@ -33,6 +33,15 @@ namespace WS.WyneAnimator
 
             Debug.LogWarning("Animation with trigger '" + triggerName + "' couldn't be found!");
         }
+
+        public void TriggerAllAnimations()
+        {
+            foreach (WAnimation animation in Animations)
+            {
+                if (animation.AnimationConditionType != WAnimationConditionType.OnTrigger) continue;
+                animation.ForceStartAnimation(this);
+            }
+        }
     }
 }
 
