@@ -27,11 +27,7 @@ namespace WS.WyneAnimator
                 if (!string.Equals(animation.TriggerName, triggerName, System.StringComparison.OrdinalIgnoreCase)) continue;
 
                 animation.ForceStartAnimation(this);
-                return;
-                
             }
-
-            Debug.LogWarning("Animation with trigger '" + triggerName + "' couldn't be found!");
         }
 
         public void TriggerAllAnimations()
