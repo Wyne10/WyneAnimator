@@ -45,7 +45,9 @@ namespace WS.WyneAnimator
         [SerializeField] private bool _initialized = false;
         public bool Loaded = false;
 
-        public void Initialize()
+        [SerializeField] public bool IsExpanded = false;
+
+        public void Initialize(bool force)
         {
             if (AnimationComponent != _previousComponent)
             {
@@ -54,7 +56,8 @@ namespace WS.WyneAnimator
             }
 
             if (AnimationComponent == null) return;
-            if (_initialized) return;
+            if (!force)
+                if (_initialized) return;
 
             _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
             if (AnimationComponent.GetType().GetProperty("enabled") != null)

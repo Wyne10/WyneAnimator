@@ -103,6 +103,11 @@ namespace WS.WyneAnimator
                         break;
                     }
 
+                    if (GUILayout.Button("Reset values", GUILayout.Width(100f)))
+                    {
+                        _animator.Animations[i].Initialize(true);
+                    }
+
                     EditorGUILayout.EndHorizontal();
 
                     if (WAnimation.isExpanded)
@@ -134,80 +139,88 @@ namespace WS.WyneAnimator
                         }
 
                         _animator.Animations[i].AnimationComponent = (Component)EditorGUILayout.ObjectField("Animated Component", _animator.Animations[i].AnimationComponent, typeof(Component), true);
-                        _animator.Animations[i].Initialize();
+                        _animator.Animations[i].Initialize(false);
                         _animator.Animations[i].Load();
 
                         EditorGUILayout.Space(10);
 
                         if (_animator.Animations[i].AnimationComponent != null)
                         {
-                            foreach (ValueInfo value in _animator.Animations[i].ValuesTweens.Keys)
+                            _animator.Animations[i].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].IsExpanded, "Values", true);
+
+                            if (_animator.Animations[i].IsExpanded)
                             {
-                                _animator.Animations[i].ValuesTweens[value].UpdateValue();
+                                EditorGUILayout.Space(10);
 
-                                if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent))
-                                    || _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale != false
-                                    || _animator.Animations[i].ValuesTweens[value].Duration != 1
-                                    || _animator.Animations[i].ValuesTweens[value].Delay != 0
-                                    || _animator.Animations[i].ValuesTweens[value].Loops != 0
-                                    || _animator.Animations[i].ValuesTweens[value].LoopType != LoopType.Restart
-                                    || _animator.Animations[i].ValuesTweens[value].Ease != Ease.Unset)
+                                foreach (ValueInfo value in _animator.Animations[i].ValuesTweens.Keys)
                                 {
-                                    _animator.Animations[i].ValuesTweens[value].Animate = true;
-                                    _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWAnimationStyle);
-                                }
-                                else
-                                {
-                                    _animator.Animations[i].ValuesTweens[value].Animate = false;
-                                    _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
-                                }
+                                    _animator.Animations[i].ValuesTweens[value].UpdateValue();
 
-                                if (_animator.Animations[i].ValuesTweens[value].IsExpanded)
-                                {
-                                    GUILayout.BeginVertical(_WTweenStyle);
-
-                                    GUILayout.BeginHorizontal();
-                                    _animator.Animations[i].ValuesTweens[value].EndValue = VisualizeObject(_animator.Animations[i].ValuesTweens[value].EndValue, "To");
-
-                                    if (GUILayout.Button("Reset", GUILayout.Width(75f)))
+                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent))
+                                        || _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale != false
+                                        || _animator.Animations[i].ValuesTweens[value].Duration != 1
+                                        || _animator.Animations[i].ValuesTweens[value].Delay != 0
+                                        || _animator.Animations[i].ValuesTweens[value].Loops != 0
+                                        || _animator.Animations[i].ValuesTweens[value].LoopType != LoopType.Restart
+                                        || _animator.Animations[i].ValuesTweens[value].Ease != Ease.Unset)
                                     {
-                                        _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
-                                    }
-                                    GUILayout.EndHorizontal();
-
-                                    if (_animator.Animations[i].ValuesTweens[value].EndValue.GetType() != typeof(bool))
-                                    {
-                                        GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
-                                        GUILayout.EndHorizontal();
-
-                                        GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
-                                        _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
-                                        GUILayout.EndHorizontal();
-
-                                        GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
-                                        _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
-                                        GUILayout.EndHorizontal();
-
-                                        GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
-                                        GUILayout.EndHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Animate = true;
+                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWAnimationStyle);
                                     }
                                     else
                                     {
-                                        GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
-                                        GUILayout.EndHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].Animate = false;
+                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
                                     }
- 
 
-                                    GUILayout.EndVertical();
+                                    if (_animator.Animations[i].ValuesTweens[value].IsExpanded)
+                                    {
+                                        GUILayout.BeginVertical(_WTweenStyle);
+
+                                        GUILayout.BeginHorizontal();
+                                        _animator.Animations[i].ValuesTweens[value].EndValue = VisualizeObject(_animator.Animations[i].ValuesTweens[value].EndValue, "To");
+
+                                        if (GUILayout.Button("Reset", GUILayout.Width(75f)))
+                                        {
+                                            _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
+                                        }
+                                        GUILayout.EndHorizontal();
+
+                                        if (_animator.Animations[i].ValuesTweens[value].EndValue.GetType() != typeof(bool))
+                                        {
+                                            GUILayout.BeginHorizontal();
+                                            _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
+                                            GUILayout.EndHorizontal();
+
+                                            GUILayout.BeginHorizontal();
+                                            _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
+                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                            GUILayout.EndHorizontal();
+
+                                            GUILayout.BeginHorizontal();
+                                            _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
+                                            _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
+                                            GUILayout.EndHorizontal();
+
+                                            GUILayout.BeginHorizontal();
+                                            _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
+                                            GUILayout.EndHorizontal();
+                                        }
+                                        else
+                                        {
+                                            GUILayout.BeginHorizontal();
+                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                            GUILayout.EndHorizontal();
+                                        }
+
+
+                                        GUILayout.EndVertical();
+                                    }
+
+                                    EditorGUILayout.Space(10);
                                 }
-
-                                EditorGUILayout.Space(10);
                             }
+                            
 
                             _animator.Animations[i].Serialize();
                         }
@@ -270,7 +283,6 @@ namespace WS.WyneAnimator
             _WTweenStyle.normal.background = _WTweenTexture;
 
             _blueWAnimationStyle.normal.background = _blueWAnimationTexture;
-            _blueWAnimationStyle.fixedWidth = 500;
 
             _headerTextStyle.fontStyle = FontStyle.Bold;
             _headerTextStyle.normal.textColor = new Color(193f / 255f, 193f / 255f, 193f / 255f);
