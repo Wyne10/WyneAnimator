@@ -119,6 +119,7 @@ namespace WS.WyneAnimator
                         if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnTrigger)
                         {
                             _animator.Animations[i].TriggerName = EditorGUILayout.TextField("Trigger Name", _animator.Animations[i].TriggerName);
+                            _animator.Animations[i].AnimationConditionObject = null;
                         }
                         else
                         {
