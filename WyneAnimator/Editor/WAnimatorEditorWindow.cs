@@ -1,32 +1,43 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
 using DG.Tweening;
-using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace WS.WyneAnimator
 {
     public class WAnimatorEditorWindow : EditorWindow
     {
         private WAnimator _animator;
+
+        // EditorWindow stuff
         private SerializedObject _animatorSerializedObject;
-
         private SerializedProperty _WAnimations;
-
         private Vector2 _scrollPos = Vector2.zero;
+        // EditorWidnow stuff
 
-        private Texture2D _WTweenTexture;
+        // Colors
         private Color _WTweenColor = new Color(56f / 255f, 56f / 255f, 56f / 255f);
+        private Color _blueWTweenColor = new Color(58f / 255f, 154f / 255f, 200f / 255f, 155f / 255f);
+        private Color _redWAnimationColor = new Color(255f / 255f, 0f / 255f, 0f / 255f, 155f / 255f);
+        // Colors
+
+        // Textures
+        private Texture2D _WTweenTexture;
+        private Texture2D _blueWTweenTexture;
+        private Texture2D _redWAnimationTexture;
+        // Textures
+
+        // Styles
         private GUIStyle _WTweenStyle = new GUIStyle();
-
-        private Texture2D _blueWAnimationTexture;
-        private Color _blueWAnimationColor = new Color(58f / 255f, 154 / 255f, 200f / 255f);
-        private GUIStyle _blueWAnimationStyle = new GUIStyle(EditorStyles.foldout);
-
+        private GUIStyle _blueWTweenStyle = new GUIStyle(EditorStyles.foldout);
+        private GUIStyle _redWAnimationStyle = new GUIStyle(EditorStyles.foldout);
         private GUIStyle _headerTextStyle = new GUIStyle();
+        // Styles
 
         public static void Open(WAnimator animator)
         {
@@ -34,14 +45,16 @@ namespace WS.WyneAnimator
             window._animator = animator;
             window._animatorSerializedObject = new SerializedObject(animator);
             window._WAnimations = window._animatorSerializedObject.FindProperty("Animations");
-            window.InitializeTextures();
-            window.InitializeStyles();
 
             if (window._animator.Animations == null)
                 window._animator.Animations = new WAnimation[0];
 
+            window.InitializeTextures();
+            window.InitializeStyles();
+
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
+
 
         private void OnGUI()
         {
@@ -58,7 +71,7 @@ namespace WS.WyneAnimator
             {
                 Debug.LogWarning("WARNING! Please close WAnimations Editor window before entering playmode, this may cause errors!");
                 this.Close();
-            }    
+            }
         }
 
         private void OnDestroy()
@@ -85,19 +98,31 @@ namespace WS.WyneAnimator
 
                 foreach (SerializedProperty WAnimation in _WAnimations)
                 {
-                    EditorGUILayout.BeginVertical("box");
+                    // Draw animation foldout
 
+                    EditorGUILayout.BeginVertical("box");
                     EditorGUILayout.BeginHorizontal();
 
                     string foldoutName = WAnimation.displayName + " " + _animator.Animations[i].AnimationComponent;
-                    WAnimation.isExpanded = EditorGUILayout.Foldout(WAnimation.isExpanded, foldoutName, true);
+
+                    if (_animator.Animations[i].AnimationConditionType != WAnimationConditionType.OnTrigger && _animator.Animations[i].AnimationConditionObject == null)
+                    {
+                        WAnimation.isExpanded = EditorGUILayout.Foldout(WAnimation.isExpanded, foldoutName, true, _redWAnimationStyle);
+                    }
+                    else if (_animator.Animations[i].AnimationComponent == null)
+                    {
+                        WAnimation.isExpanded = EditorGUILayout.Foldout(WAnimation.isExpanded, foldoutName, true, _redWAnimationStyle);
+                    }
+                    else
+                    {
+                        WAnimation.isExpanded = EditorGUILayout.Foldout(WAnimation.isExpanded, foldoutName, true);
+                    }
 
                     if (GUILayout.Button("-", GUILayout.Width(25f)))
                     {
                         List<WAnimation> newWAnimations = _animator.Animations.ToList();
                         newWAnimations.RemoveAt(i);
-                        WAnimation[] newWAnimationsArray = newWAnimations.ToArray();
-                        _animator.Animations = newWAnimationsArray;
+                        _animator.Animations = newWAnimations.ToArray();
                         _animatorSerializedObject.Update();
                         EditorGUILayout.EndHorizontal();
                         break;
@@ -112,10 +137,13 @@ namespace WS.WyneAnimator
 
                     if (WAnimation.isExpanded)
                     {
+                        // Draw animation tweens
+
                         EditorGUILayout.Space(10);
 
                         _animator.Animations[i].AnimationConditionType = (WAnimationConditionType)EditorGUILayout.EnumPopup("Condition", _animator.Animations[i].AnimationConditionType);
 
+                        // Change Condition object/Trigger name
                         if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnTrigger)
                         {
                             _animator.Animations[i].TriggerName = EditorGUILayout.TextField("Trigger Name", _animator.Animations[i].TriggerName);
@@ -123,10 +151,11 @@ namespace WS.WyneAnimator
                         }
                         else
                         {
-                            _animator.Animations[i].TriggerName = "";
                             _animator.Animations[i].AnimationConditionObject = (GameObject)EditorGUILayout.ObjectField("Condition Object", _animator.Animations[i].AnimationConditionObject, typeof(GameObject), true);
+                            _animator.Animations[i].TriggerName = "";
                         }
 
+                        // Check if condition object have "Button" component (OnClick condition)
                         if (_animator.Animations[i].AnimationConditionType == WAnimationConditionType.OnClick)
                         {
                             if (_animator.Animations[i].AnimationConditionObject != null)
@@ -139,12 +168,13 @@ namespace WS.WyneAnimator
                             }
                         }
 
-                        _animator.Animations[i].AnimationComponent = (Component)EditorGUILayout.ObjectField("Animated Component", _animator.Animations[i].AnimationComponent, typeof(Component), true);
+                        _animator.Animations[i].AnimationComponent = (Component)EditorGUILayout.ObjectField("Animation Component", _animator.Animations[i].AnimationComponent, typeof(Component), true);
                         _animator.Animations[i].Initialize(false);
                         _animator.Animations[i].Load();
 
                         EditorGUILayout.Space(10);
 
+                        // Draw tweens values
                         if (_animator.Animations[i].AnimationComponent != null)
                         {
                             _animator.Animations[i].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].IsExpanded, "Values", true);
@@ -153,67 +183,72 @@ namespace WS.WyneAnimator
                             {
                                 EditorGUILayout.Space(10);
 
-                                foreach (ValueInfo value in _animator.Animations[i].ValuesTweens.Keys)
+                                foreach (PropertyInfo property in _animator.Animations[i].PropertiesTweens.Keys)
                                 {
-                                    _animator.Animations[i].ValuesTweens[value].UpdateValue();
+                                    _animator.Animations[i].PropertiesTweens[property].UpdateProperty();
 
-                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent))
-                                        || _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale != false
-                                        || _animator.Animations[i].ValuesTweens[value].Duration != 1
-                                        || _animator.Animations[i].ValuesTweens[value].Delay != 0
-                                        || _animator.Animations[i].ValuesTweens[value].Loops != 0
-                                        || _animator.Animations[i].ValuesTweens[value].LoopType != LoopType.Restart
-                                        || _animator.Animations[i].ValuesTweens[value].Ease != Ease.Unset)
+                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].PropertiesTweens[property].PreviousPropertyValue, _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent)) && !_animator.Animations[i].PropertiesTweens[property].Animate)
                                     {
-                                        _animator.Animations[i].ValuesTweens[value].Animate = true;
-                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWAnimationStyle);
+                                        _animator.Animations[i].PropertiesTweens[property].EndValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
+                                        _animator.Animations[i].PropertiesTweens[property].PreviousPropertyValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
+                                    }
+
+                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].PropertiesTweens[property].EndValue, _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent))
+                                    || _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale != false
+                                    || _animator.Animations[i].PropertiesTweens[property].Duration != 1
+                                    || _animator.Animations[i].PropertiesTweens[property].Delay != 0
+                                    || _animator.Animations[i].PropertiesTweens[property].Loops != 0
+                                    || _animator.Animations[i].PropertiesTweens[property].LoopType != LoopType.Restart
+                                    || _animator.Animations[i].PropertiesTweens[property].Ease != Ease.Unset)
+                                    {
+                                        _animator.Animations[i].PropertiesTweens[property].Animate = true;
+                                        _animator.Animations[i].PropertiesTweens[property].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].PropertiesTweens[property].IsExpanded, property.Name, true, _blueWTweenStyle);
                                     }
                                     else
                                     {
-                                        _animator.Animations[i].ValuesTweens[value].Animate = false;
-                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
+                                        _animator.Animations[i].PropertiesTweens[property].Animate = false;
+                                        _animator.Animations[i].PropertiesTweens[property].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].PropertiesTweens[property].IsExpanded, property.Name, true);
                                     }
 
-                                    if (_animator.Animations[i].ValuesTweens[value].IsExpanded)
+                                    if (_animator.Animations[i].PropertiesTweens[property].IsExpanded)
                                     {
                                         GUILayout.BeginVertical(_WTweenStyle);
 
                                         GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].ValuesTweens[value].EndValue = VisualizeObject(_animator.Animations[i].ValuesTweens[value].EndValue, "To");
+                                        _animator.Animations[i].PropertiesTweens[property].EndValue = VisualizeObject(_animator.Animations[i].PropertiesTweens[property].EndValue, "To");
 
                                         if (GUILayout.Button("Reset", GUILayout.Width(75f)))
                                         {
-                                            _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
+                                            _animator.Animations[i].PropertiesTweens[property].EndValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
                                         }
                                         GUILayout.EndHorizontal();
 
-                                        if (_animator.Animations[i].ValuesTweens[value].EndValue.GetType() != typeof(bool))
+                                        if (_animator.Animations[i].PropertiesTweens[property].EndValue.GetType() != typeof(bool))
                                         {
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
+                                            _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
-                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                            _animator.Animations[i].PropertiesTweens[property].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].PropertiesTweens[property].Duration);
+                                            _animator.Animations[i].PropertiesTweens[property].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].PropertiesTweens[property].Delay);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
-                                            _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
+                                            _animator.Animations[i].PropertiesTweens[property].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].PropertiesTweens[property].Loops);
+                                            _animator.Animations[i].PropertiesTweens[property].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].PropertiesTweens[property].LoopType);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
+                                            _animator.Animations[i].PropertiesTweens[property].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].PropertiesTweens[property].Ease);
                                             GUILayout.EndHorizontal();
                                         }
                                         else
                                         {
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
+                                            _animator.Animations[i].PropertiesTweens[property].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].PropertiesTweens[property].Delay);
                                             GUILayout.EndHorizontal();
                                         }
-
 
                                         GUILayout.EndVertical();
                                     }
@@ -221,12 +256,9 @@ namespace WS.WyneAnimator
                                     EditorGUILayout.Space(10);
                                 }
                             }
-                            
-
                             _animator.Animations[i].Serialize();
                         }
                     }
-
                     i++;
                     EditorGUILayout.EndVertical();
                     EditorGUILayout.Space(10);
@@ -237,8 +269,7 @@ namespace WS.WyneAnimator
             {
                 List<WAnimation> newWAnimations = _animator.Animations.ToList();
                 newWAnimations.Add(new WAnimation());
-                WAnimation[] newWAnimationsArray = newWAnimations.ToArray();
-                _animator.Animations = newWAnimationsArray;
+                _animator.Animations = newWAnimations.ToArray();
                 _animatorSerializedObject.Update();
             }
 
@@ -283,7 +314,9 @@ namespace WS.WyneAnimator
         {
             _WTweenStyle.normal.background = _WTweenTexture;
 
-            _blueWAnimationStyle.normal.background = _blueWAnimationTexture;
+            _blueWTweenStyle.normal.background = _blueWTweenTexture;
+
+            _redWAnimationStyle.normal.background = _redWAnimationTexture;
 
             _headerTextStyle.fontStyle = FontStyle.Bold;
             _headerTextStyle.normal.textColor = new Color(193f / 255f, 193f / 255f, 193f / 255f);
@@ -297,12 +330,14 @@ namespace WS.WyneAnimator
             _WTweenTexture.SetPixel(0, 0, _WTweenColor);
             _WTweenTexture.Apply();
 
-            _blueWAnimationTexture = new Texture2D(1, 1);
-            _blueWAnimationTexture.SetPixel(0, 0, _blueWAnimationColor);
-            _blueWAnimationTexture.Apply();
+            _blueWTweenTexture = new Texture2D(1, 1);
+            _blueWTweenTexture.SetPixel(0, 0, _blueWTweenColor);
+            _blueWTweenTexture.Apply();
+
+            _redWAnimationTexture = new Texture2D(1, 1);
+            _redWAnimationTexture.SetPixel(0, 0, _redWAnimationColor);
+            _redWAnimationTexture.Apply();
         }
-
     }
+
 }
-
-

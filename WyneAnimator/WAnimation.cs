@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -37,10 +38,10 @@ namespace WS.WyneAnimator
         [SerializeField] public Component AnimationComponent;
         [SerializeField] private Component _previousComponent;
 
-        private List<ValueInfo> _componentValues;
-        public Dictionary<ValueInfo, WTween> ValuesTweens = new Dictionary<ValueInfo, WTween>();
+        private List<PropertyInfo> _componentProperties;
+        public Dictionary<PropertyInfo, WTween> PropertiesTweens = new Dictionary<PropertyInfo, WTween>();
 
-        [SerializeField] private WTween[] _serializedValuesTweens;
+        [SerializeField] private WTween[] _serializedPropertiesTweens;
 
         [SerializeField] private bool _initialized = false;
         public bool Loaded = false;
@@ -59,20 +60,17 @@ namespace WS.WyneAnimator
             if (!force)
                 if (_initialized) return;
 
-            _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentValues);
-            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeMember(ref _componentValues);
-/*            if (AnimationComponent.GetType().GetProperty("enabled") != null)
-                _componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
-            if (AnimationComponent.GetType().GetProperty("hierarchyCapacity") != null)*/
+            _componentProperties = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentProperties);
+            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeProperty(ref _componentProperties);
 
-            ValuesTweens.Clear();
-            _serializedValuesTweens = new WTween[0];
+            PropertiesTweens.Clear();
+            _serializedPropertiesTweens = new WTween[0];
 
-            foreach (ValueInfo valueInfo in _componentValues)
+            foreach (PropertyInfo property in _componentProperties)
             {
-                if (!valueInfo.CheckType()) continue;
-                ValuesTweens.Add(valueInfo, new WTween(AnimationComponent, valueInfo, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
+                if (!property.CheckPropertyType()) continue;
+                PropertiesTweens.Add(property, new WTween(AnimationComponent, property, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
             }
 
             _initialized = true;
@@ -81,47 +79,32 @@ namespace WS.WyneAnimator
         public void Load()
         {
             if (AnimationComponent == null) return;
-            if (_serializedValuesTweens.Length == 0) return;
             if (Loaded) return;
             
-            _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentValues);
-            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeMember(ref _componentValues);
+            _componentProperties = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentProperties);
+            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeProperty(ref _componentProperties);
 
-            foreach (ValueInfo valueInfo in _componentValues)
+            foreach (PropertyInfo property in _componentProperties)
             {
-                if (!valueInfo.CheckType()) continue;
+                if (!property.CheckPropertyType()) continue;
 
                 bool tweenFound = false;
-                bool tokenFound = false;
 
-                foreach (WTween tween in _serializedValuesTweens)
+                foreach (WTween tween in _serializedPropertiesTweens)
                 {
-                    if (tween.ValueMetadataToken == valueInfo.MemberInfo.MetadataToken)
+                    if (!PropertiesTweens.ContainsValue(tween))
                     {
+                        PropertiesTweens.Add(property, tween);
                         tweenFound = true;
-
-                        foreach (ValueInfo valueInfoKey in ValuesTweens.Keys)
-                        {
-                            if (valueInfoKey.MemberInfo.MetadataToken == tween.ValueMetadataToken)
-                            {
-                                tokenFound = true;
-                                break;
-                            }
-                        }
-
-                        if (!tokenFound)
-                            ValuesTweens.Add(valueInfo, tween);
-
-                        break;
                     }
                 }
 
-                if (!tweenFound)
-                    ValuesTweens.Add(valueInfo, new WTween(AnimationComponent, valueInfo, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
+                if (!tweenFound && !PropertiesTweens.ContainsKey(property))
+                    PropertiesTweens.Add(property, new WTween(AnimationComponent, property, 0, 1, DG.Tweening.Ease.Unset, 0, DG.Tweening.LoopType.Restart, false));
             }
 
-            foreach (WTween tween in ValuesTweens.Values)
+            foreach (WTween tween in PropertiesTweens.Values)
             {
                 tween.UpdateEndValue();
             }
@@ -131,16 +114,16 @@ namespace WS.WyneAnimator
 
         public void Serialize()
         {
-            _serializedValuesTweens = ValuesTweens.Values.ToArray();
+            _serializedPropertiesTweens = PropertiesTweens.Values.Where(v => v.Animate == true).ToArray();
         }
 
         public void InitializeTweens()
         {
-            foreach (WTween tween in _serializedValuesTweens)
+            foreach (WTween tween in _serializedPropertiesTweens)
             {
                 if (tween.Animate)
                 {
-                    tween.UpdateValue();
+                    tween.UpdateProperty();
                 }
             }
         }
@@ -152,7 +135,9 @@ namespace WS.WyneAnimator
 
         internal void ForceStartAnimation(MonoBehaviour holder)
         {
-            foreach (WTween tween in _serializedValuesTweens)
+            if (AnimationComponent == null) return;
+
+            foreach (WTween tween in _serializedPropertiesTweens)
             {
                 tween.StartTween(holder);
             }
@@ -160,6 +145,7 @@ namespace WS.WyneAnimator
 
         private IEnumerator AnimationCoroutine(MonoBehaviour holder)
         {
+            if (AnimationComponent == null) yield break;
             if (_animationCondition == null) yield break;
             if (_animationConditionObject == null) yield break;
 
@@ -167,7 +153,7 @@ namespace WS.WyneAnimator
             {
                 if (_animationCondition.CheckCondition())
                 {
-                    foreach (WTween tween in _serializedValuesTweens)
+                    foreach (WTween tween in _serializedPropertiesTweens)
                     {
                         tween.StartTween(holder);
                     }
