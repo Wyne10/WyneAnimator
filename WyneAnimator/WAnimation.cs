@@ -135,7 +135,10 @@ namespace WS.WyneAnimator
         {
             foreach (WTween tween in _serializedValuesTweens)
             {
-                tween.UpdateValue();
+                if (tween.Animate)
+                {
+                    tween.UpdateValue();
+                }
             }
         }
 
