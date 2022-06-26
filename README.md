@@ -50,7 +50,7 @@ The animation element looks like this:
 
 ![Alt Text](https://i.imgur.com/rx9vRdR.png)
 
-Here you must select the animation condition (OnTrigger condition must be called manually by using TriggerAnimation(string triggerName) method in WAnimator):
+Here you must select the animation condition (OnTrigger condition must be called manually by using TriggerAnimations(string triggerName) method in WAnimator):
 
 ![Alt Text](https://i.imgur.com/yn6v2z0.png)
 
