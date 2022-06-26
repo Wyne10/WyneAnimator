@@ -48,5 +48,36 @@ namespace WS.WyneAnimator
 
             return excludedValues;
         }
+
+        public static void IncludeField(this FieldInfo field, ref List<ValueInfo> valueInfoList)
+        {
+            if (field != null)
+            {
+                valueInfoList.Add(new ValueInfo(field));
+            }
+        }
+
+        public static void IncludeProperty(this PropertyInfo property, ref List<ValueInfo> valueInfoList)
+        {
+            if (property != null)
+            {
+                valueInfoList.Add(new ValueInfo(property));
+            }
+        }
+
+        public static void ExcludeMember(this MemberInfo member , ref List<ValueInfo> valueInfoList)
+        {
+            if (member != null)
+            {
+                foreach (ValueInfo value in valueInfoList)
+                {
+                    if (value.MemberInfo == member)
+                    {
+                        valueInfoList.Remove(value);
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

@@ -60,8 +60,11 @@ namespace WS.WyneAnimator
                 if (_initialized) return;
 
             _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            if (AnimationComponent.GetType().GetProperty("enabled") != null)
+            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentValues);
+            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeMember(ref _componentValues);
+/*            if (AnimationComponent.GetType().GetProperty("enabled") != null)
                 _componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
+            if (AnimationComponent.GetType().GetProperty("hierarchyCapacity") != null)*/
 
             ValuesTweens.Clear();
             _serializedValuesTweens = new WTween[0];
@@ -82,8 +85,8 @@ namespace WS.WyneAnimator
             if (Loaded) return;
             
             _componentValues = AnimationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            if (AnimationComponent.GetType().GetProperty("enabled") != null)
-                _componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
+            AnimationComponent.GetType().GetProperty("enabled").IncludeProperty(ref _componentValues);
+            AnimationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeMember(ref _componentValues);
 
             foreach (ValueInfo valueInfo in _componentValues)
             {

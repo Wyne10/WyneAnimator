@@ -94,8 +94,8 @@ namespace WS.WyneAnimator
         public void UpdateValue()
         {
             List<ValueInfo> componentValues = _animationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            if (_animationComponent.GetType().GetProperty("enabled") != null)
-                componentValues.Add(new ValueInfo(typeof(Behaviour).GetProperty("enabled")));
+            _animationComponent.GetType().GetProperty("enabled").IncludeProperty(ref componentValues);
+            _animationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeMember(ref componentValues);
 
             foreach (ValueInfo valueInfo in componentValues)
             {
