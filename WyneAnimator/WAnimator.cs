@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -5,6 +6,12 @@ namespace WS.WyneAnimator
     public class WAnimator : MonoBehaviour
     {
         [SerializeField] public WAnimation[] Animations;
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+            DOTween.KillAll();
+        }
 
         private void Awake()
         {
@@ -19,7 +26,7 @@ namespace WS.WyneAnimator
             }
         }
 
-        public void TriggerAnimation(string triggerName)
+        public void TriggerAnimations(string triggerName)
         {
             foreach (WAnimation animation in Animations)
             {
