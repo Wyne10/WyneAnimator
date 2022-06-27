@@ -93,10 +93,14 @@ namespace WS.WyneAnimator
 
                 foreach (WTween tween in _serializedPropertiesTweens)
                 {
-                    if (!PropertiesTweens.ContainsValue(tween))
+                    if (property.MetadataToken == tween.PropertyMetadataToken)
                     {
-                        PropertiesTweens.Add(property, tween);
-                        tweenFound = true;
+                        if (!PropertiesTweens.ContainsValue(tween))
+                        {
+                            PropertiesTweens.Add(property, tween);
+                            tweenFound = true;
+                            break;
+                        }
                     }
                 }
 
