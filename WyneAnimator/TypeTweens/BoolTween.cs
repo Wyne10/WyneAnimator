@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -12,10 +11,10 @@ namespace WS.WyneAnimator
         public BoolTween(object endValue) : base(endValue)
         { }
 
-        public override IEnumerator TweenCoroutine(object obj, PropertyInfo property, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
+        public override IEnumerator TweenCoroutine(object obj, ValueInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
         {
             yield return new WaitForSeconds(delay);
-            property.SetValue(obj, _endValue);
+            value.SetValue(obj, _endValue);
         }
     }
 }

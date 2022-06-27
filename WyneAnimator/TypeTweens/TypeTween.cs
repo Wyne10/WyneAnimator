@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -13,14 +12,14 @@ namespace WS.WyneAnimator
 
         public TypeTween(object endValue) { _endValue = (TType)endValue; }
 
-        public void StartTween(object obj, MonoBehaviour holder, PropertyInfo property, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
+        public void StartTween(object obj, MonoBehaviour holder, ValueInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
         {
             if (obj == null) return;
-            if (property == null) return;
-            holder.StartCoroutine(TweenCoroutine(obj, property, delay, duration, ease, loops, loopType, ignoreTimeScale));
+            if (value == null) return;
+            holder.StartCoroutine(TweenCoroutine(obj, value, delay, duration, ease, loops, loopType, ignoreTimeScale));
         }
 
-        public virtual IEnumerator TweenCoroutine(object obj, PropertyInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
+        public virtual IEnumerator TweenCoroutine(object obj, ValueInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale)
         {
             yield return null;
         }

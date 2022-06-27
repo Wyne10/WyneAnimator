@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace WS.WyneAnimator
 {
     public static class TypeExtensions
     {
-        public static PropertyInfo[] ExcludeTypeProperties(this PropertyInfo[] excludeFrom, PropertyInfo[] toExclude)
+        public static TMembersType[] ExcludeTypeMembers<TMembersType>(this MemberInfo[] excludeFrom, TMembersType[] toExclude) where TMembersType : MemberInfo
         {
-            List<PropertyInfo> excludedProperties = new List<PropertyInfo>();
+            List<TMembersType> excludedTypeMembers = new List<TMembersType>();
 
-            foreach (PropertyInfo property in excludeFrom)
+            foreach (TMembersType member in (TMembersType[])excludeFrom)
             {
                 bool exclude = false;
 
-                foreach (PropertyInfo excludeProperty in toExclude)
+                foreach (TMembersType excludeMember in toExclude)
                 {
-                    if (property.MetadataToken == excludeProperty.MetadataToken)
+                    if (member.MetadataToken == excludeMember.MetadataToken)
                     {
                         exclude = true;
                         break;
@@ -25,52 +24,51 @@ namespace WS.WyneAnimator
                 }
 
                 if (!exclude)
-                    excludedProperties.Add(property);
+                    excludedTypeMembers.Add(member);
             }
 
-            return excludedProperties.ToArray();
+            return excludedTypeMembers.ToArray();
         }
 
-        public static List<PropertyInfo> ExcludeType(this Type excludeFrom, Type toExclude)
+        public static List<ValueInfo> ExcludeType(this Type excludeFrom, Type toExclude)
         {
-            List<PropertyInfo> excludedProperties = new List<PropertyInfo>();
+            List<ValueInfo> excludedValues = new List<ValueInfo>();
 
-            BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
 
-            foreach (PropertyInfo property in excludeFrom.GetProperties(flags).ExcludeTypeProperties(toExclude.GetProperties()))
+            foreach (FieldInfo field in excludeFrom.GetFields(flags).ExcludeTypeMembers(toExclude.GetFields()))
             {
-                excludedProperties.Add(property);
+                excludedValues.Add(new ValueInfo(field));
             }
 
-            return excludedProperties;
+            foreach (PropertyInfo property in excludeFrom.GetProperties(flags).ExcludeTypeMembers(toExclude.GetProperties()))
+            {
+                excludedValues.Add(new ValueInfo(property));
+            }
+
+            return excludedValues;
         }
 
-        public static bool CheckPropertyType(this PropertyInfo property)
-        {
-            if (property.PropertyType == typeof(int) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(float) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(long) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(double) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(Color) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(Vector2) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(Vector3) && property.CanWrite) return true;
-            else if (property.PropertyType == typeof(bool) && property.CanWrite) return true;
-            return false;
-        }
-
-        public static void IncludeProperty(this PropertyInfo toInclude, ref List<PropertyInfo> propertyInfoList)
+        public static void IncludeProperty(this PropertyInfo toInclude, ref List<ValueInfo> valueInfoList)
         {
             if (toInclude != null)
             {
-                propertyInfoList.Add(toInclude);
+                valueInfoList.Add(new ValueInfo(toInclude));
             }
         }
 
-        public static void ExcludeProperty(this PropertyInfo toExclude , ref List<PropertyInfo> propertyInfoList)
+        public static void ExcludeProperty(this PropertyInfo toExclude, ref List<ValueInfo> valueInfoList)
         {
             if (toExclude != null)
             {
-                propertyInfoList.Remove(toExclude);
+                foreach (ValueInfo value in valueInfoList)
+                {
+                    if (value.MemberInfo.MetadataToken == toExclude.MetadataToken)
+                    {
+                        valueInfoList.Remove(value);
+                        return;
+                    }
+                }
             }
         }
     }

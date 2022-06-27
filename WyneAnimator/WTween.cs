@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 namespace WS.WyneAnimator
@@ -11,9 +10,9 @@ namespace WS.WyneAnimator
     {
         [SerializeField] private Component _animationComponent;
 
-        public PropertyInfo Property;
-        [SerializeField] private int _propertyMetadataToken;
-        public int PropertyMetadataToken { get => _propertyMetadataToken; }
+        public ValueInfo Value;
+        [SerializeField] private int _valueMetadataToken;
+        public int ValueMetadataToken { get => _valueMetadataToken; }
 
         private object _endValue;
 
@@ -30,10 +29,11 @@ namespace WS.WyneAnimator
 
         [SerializeField] public bool Animate = false;
 
-        [SerializeField] public object PreviousPropertyValue;
+        [SerializeField] public object PreviousValueInfoValue;
 
-        public object EndValue 
-        { get => _endValue;
+        public object EndValue
+        { 
+          get => _endValue;
           set
             {
                 _endValue = value;
@@ -52,17 +52,17 @@ namespace WS.WyneAnimator
             IgnoreTimeScale = ignoreTimeScale;
         }
 
-        public WTween(Component animationComponent, PropertyInfo property, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale) : this(animationComponent, delay, duration, ease, loops, loopType, ignoreTimeScale)
+        public WTween(Component animationComponent, ValueInfo value, float delay, float duration, Ease ease, int loops, LoopType loopType, bool ignoreTimeScale) : this(animationComponent, delay, duration, ease, loops, loopType, ignoreTimeScale)
         {
-            Property = property;
-            _propertyMetadataToken = property.MetadataToken;
-            EndValue = property.GetValue(animationComponent);
+            Value = value;
+            _valueMetadataToken = value.MemberInfo.MetadataToken;
+            EndValue = value.GetValue(animationComponent);
         }
 
         public void StartTween(MonoBehaviour holder)
         {
             if (Animate)
-                _typeTween.StartTween(_animationComponent, holder, Property, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
+                _typeTween.StartTween(_animationComponent, holder, Value, Delay, Duration, Ease, Loops, LoopType, IgnoreTimeScale);
         }
 
         private void SetTypeTween(object value)
@@ -95,19 +95,19 @@ namespace WS.WyneAnimator
 
         public void UpdateProperty()
         {
-            if (Property != null) return;
+            if (Value != null) return;
 
-            List<PropertyInfo> componentProperties = _animationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
-            _animationComponent.GetType().GetProperty("enabled").IncludeProperty(ref componentProperties);
-            _animationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeProperty(ref componentProperties);
+            List<ValueInfo> componentValues = _animationComponent.GetType().ExcludeType(typeof(MonoBehaviour));
+            _animationComponent.GetType().GetProperty("enabled").IncludeProperty(ref componentValues);
+            _animationComponent.GetType().GetProperty("hierarchyCapacity").ExcludeProperty(ref componentValues);
 
-            foreach (PropertyInfo property in componentProperties)
+            foreach (ValueInfo value in componentValues)
             {
-                if (!property.CheckPropertyType()) continue;
+                if (!value.CheckType()) continue;
 
-                if (property.MetadataToken == _propertyMetadataToken)
+                if (value.MemberInfo.MetadataToken == _valueMetadataToken)
                 {
-                    Property = property;
+                    Value = value;
                     return;
                 }
             }

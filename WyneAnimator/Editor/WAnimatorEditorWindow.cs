@@ -84,6 +84,7 @@ namespace WS.WyneAnimator
             if (PrefabUtility.IsPartOfPrefabInstance(_animator.gameObject))
                 PrefabUtility.ApplyPrefabInstance(_animator.gameObject, InteractionMode.UserAction);
             _animatorSerializedObject.ApplyModifiedProperties();
+
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
@@ -183,70 +184,70 @@ namespace WS.WyneAnimator
                             {
                                 EditorGUILayout.Space(10);
 
-                                foreach (PropertyInfo property in _animator.Animations[i].PropertiesTweens.Keys)
+                                foreach (ValueInfo value in _animator.Animations[i].ValuesTweens.Keys)
                                 {
-                                    _animator.Animations[i].PropertiesTweens[property].UpdateProperty();
+                                    _animator.Animations[i].ValuesTweens[value].UpdateProperty();
 
-                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].PropertiesTweens[property].PreviousPropertyValue, _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent)) && !_animator.Animations[i].PropertiesTweens[property].Animate)
+                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].PreviousValueInfoValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent)) && !_animator.Animations[i].ValuesTweens[value].Animate)
                                     {
-                                        _animator.Animations[i].PropertiesTweens[property].EndValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
-                                        _animator.Animations[i].PropertiesTweens[property].PreviousPropertyValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
+                                        _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
+                                        _animator.Animations[i].ValuesTweens[value].PreviousValueInfoValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
                                     }
 
-                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].PropertiesTweens[property].EndValue, _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent))
-                                    || _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale != false
-                                    || _animator.Animations[i].PropertiesTweens[property].Duration != 1
-                                    || _animator.Animations[i].PropertiesTweens[property].Delay != 0
-                                    || _animator.Animations[i].PropertiesTweens[property].Loops != 0
-                                    || _animator.Animations[i].PropertiesTweens[property].LoopType != LoopType.Restart
-                                    || _animator.Animations[i].PropertiesTweens[property].Ease != Ease.Unset)
+                                    if (!EqualityComparer<object>.Default.Equals(_animator.Animations[i].ValuesTweens[value].EndValue, _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent))
+                                    || _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale != false
+                                    || _animator.Animations[i].ValuesTweens[value].Duration != 0
+                                    || _animator.Animations[i].ValuesTweens[value].Delay != 0
+                                    || _animator.Animations[i].ValuesTweens[value].Loops != 0
+                                    || _animator.Animations[i].ValuesTweens[value].LoopType != LoopType.Restart
+                                    || _animator.Animations[i].ValuesTweens[value].Ease != Ease.Unset)
                                     {
-                                        _animator.Animations[i].PropertiesTweens[property].Animate = true;
-                                        _animator.Animations[i].PropertiesTweens[property].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].PropertiesTweens[property].IsExpanded, property.Name, true, _blueWTweenStyle);
+                                        _animator.Animations[i].ValuesTweens[value].Animate = true;
+                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true, _blueWTweenStyle);
                                     }
                                     else
                                     {
-                                        _animator.Animations[i].PropertiesTweens[property].Animate = false;
-                                        _animator.Animations[i].PropertiesTweens[property].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].PropertiesTweens[property].IsExpanded, property.Name, true);
+                                        _animator.Animations[i].ValuesTweens[value].Animate = false;
+                                        _animator.Animations[i].ValuesTweens[value].IsExpanded = EditorGUILayout.Foldout(_animator.Animations[i].ValuesTweens[value].IsExpanded, value.Name, true);
                                     }
 
-                                    if (_animator.Animations[i].PropertiesTweens[property].IsExpanded)
+                                    if (_animator.Animations[i].ValuesTweens[value].IsExpanded)
                                     {
                                         GUILayout.BeginVertical(_WTweenStyle);
 
                                         GUILayout.BeginHorizontal();
-                                        _animator.Animations[i].PropertiesTweens[property].EndValue = VisualizeObject(_animator.Animations[i].PropertiesTweens[property].EndValue, "To");
+                                        _animator.Animations[i].ValuesTweens[value].EndValue = VisualizeObject(_animator.Animations[i].ValuesTweens[value].EndValue, "To");
 
                                         if (GUILayout.Button("Reset", GUILayout.Width(75f)))
                                         {
-                                            _animator.Animations[i].PropertiesTweens[property].EndValue = _animator.Animations[i].PropertiesTweens[property].Property.GetValue(_animator.Animations[i].AnimationComponent);
+                                            _animator.Animations[i].ValuesTweens[value].EndValue = _animator.Animations[i].ValuesTweens[value].Value.GetValue(_animator.Animations[i].AnimationComponent);
                                         }
                                         GUILayout.EndHorizontal();
 
-                                        if (_animator.Animations[i].PropertiesTweens[property].EndValue.GetType() != typeof(bool))
+                                        if (_animator.Animations[i].ValuesTweens[value].EndValue.GetType() != typeof(bool))
                                         {
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].PropertiesTweens[property].IgnoreTimeScale);
+                                            _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale = EditorGUILayout.Toggle("Ignore Time Scale", _animator.Animations[i].ValuesTweens[value].IgnoreTimeScale);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].PropertiesTweens[property].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].PropertiesTweens[property].Duration);
-                                            _animator.Animations[i].PropertiesTweens[property].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].PropertiesTweens[property].Delay);
+                                            _animator.Animations[i].ValuesTweens[value].Duration = EditorGUILayout.FloatField("Duration", _animator.Animations[i].ValuesTweens[value].Duration);
+                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].PropertiesTweens[property].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].PropertiesTweens[property].Loops);
-                                            _animator.Animations[i].PropertiesTweens[property].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].PropertiesTweens[property].LoopType);
+                                            _animator.Animations[i].ValuesTweens[value].Loops = EditorGUILayout.IntField("Loops", _animator.Animations[i].ValuesTweens[value].Loops);
+                                            _animator.Animations[i].ValuesTweens[value].LoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _animator.Animations[i].ValuesTweens[value].LoopType);
                                             GUILayout.EndHorizontal();
 
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].PropertiesTweens[property].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].PropertiesTweens[property].Ease);
+                                            _animator.Animations[i].ValuesTweens[value].Ease = (Ease)EditorGUILayout.EnumPopup("Ease", _animator.Animations[i].ValuesTweens[value].Ease);
                                             GUILayout.EndHorizontal();
                                         }
                                         else
                                         {
                                             GUILayout.BeginHorizontal();
-                                            _animator.Animations[i].PropertiesTweens[property].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].PropertiesTweens[property].Delay);
+                                            _animator.Animations[i].ValuesTweens[value].Delay = EditorGUILayout.FloatField("Delay", _animator.Animations[i].ValuesTweens[value].Delay);
                                             GUILayout.EndHorizontal();
                                         }
 
