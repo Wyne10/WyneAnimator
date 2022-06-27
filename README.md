@@ -54,7 +54,7 @@ Here you must select the animation condition (OnTrigger condition must be called
 
 ![Alt Text](https://i.imgur.com/yn6v2z0.png)
 
-Then you have to pass a condition object (object that being used to check condition) and animated component (component that will be animated). Animator will parse the entire component and show you something like this:
+Then you have to pass a condition object (object that being used to check condition) and animated component (component that will be animated). Animator will parse all the __PROPERTIES__ of component and show you something like this:
 
 ![Alt Text](https://i.imgur.com/bFqtNlF.png)
 
