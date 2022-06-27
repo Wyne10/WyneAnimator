@@ -58,11 +58,11 @@ Then you have to pass a condition object (object that being used to check condit
 
 ![Alt Text](https://i.imgur.com/bFqtNlF.png)
 
-If you open one of these fields, you can change its animation parameters, all used field will be animated when when the condition is met:
+If you open one of these values, you can change its animation parameters, all used values will be animated when when the condition is met:
 
 ![Alt Text](https://i.imgur.com/iTppvvN.png)
 
-Also, used field will be highlighted in blue:
+Also, used values will be highlighted in blue:
 
 ![Alt Text](https://i.imgur.com/O4FZePJ.png)
 
