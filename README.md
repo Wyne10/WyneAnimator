@@ -8,7 +8,7 @@ __Useful tool for creating tween animations, mainly targeted to UI.__
 - Installed DOTween
 
 ## Download
-To load this project, simply drag and drop the WyneAnimator folder into your Unity project.
+To load this project, simply import unity package or drag and drop the WyneAnimator folder into your Unity project.
 
 ## Features
 - Parses any component
